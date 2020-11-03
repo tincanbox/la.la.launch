@@ -1,0 +1,14 @@
+{
+    "Whoops! Something went wrong."
+        : "リクエスト時にエラーが発生しました。",
+    "Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another."
+        : "登録が完了しました。ご登録いただいたメールアドレス宛てに認証用URLの記載されたメールをお送りしていますので、メール内のリンクをクリックして確定をしてください。",
+    "This password reset link will expire in :count minutes."
+        : "パスワードリセットURLは :count 分で有効期限が切れます。",
+    "A new verification link has been sent to the email address you provided during registration."
+        : "新規認証用のURLを、登録時に指定したメールアドレス宛にお送りしました。",
+    "We were unable to find a registered user with this email address."
+        : "存在しないメールアドレスです。",
+    "This user already belongs to the team."
+        : "すでにチームに所属しているユーザーです。"
+}

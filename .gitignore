@@ -1,0 +1,6 @@
+.vscode
+/laradock
+
+/volume/build
+
+# Remove this after create-project

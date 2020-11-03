@@ -1,0 +1,10 @@
+{
+  "name": "lalalaunch",
+  "version": "1.0.0",
+  "description": "LA.LA.LAUNCH",
+  "scripts": {
+    "init": "./bin/init"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,151 @@
+<template>
+    <jet-form-section @submitted="updateProfileInformation">
+        <template #title>
+            {{ $__('page.profile:update:title') }}
+        </template>
+
+        <template #description>
+            {{ $__('page.profile:update:desc') }}
+        </template>
+
+        <template #form>
+            <!-- Profile Photo -->
+            <div class="col-span-6" v-if="$page.jetstream.managesProfilePhotos">
+                <!-- Profile Photo File Input -->
+                <input type="file" class="hidden"
+                            ref="photo"
+                            @change="updatePhotoPreview">
+
+                <jet-label for="photo" v-bind:value="$__('page.profile:update:photo')" />
+
+                <!-- Current Profile Photo -->
+                <div class="mt-2" v-show="! photoPreview">
+                    <img
+                        :src="user.profile_photo_url"
+                        style="width: clamp(6rem, 20vw, 10rem); height: clamp(6rem, 20vw, 10rem);"
+                        alt="Current Profile Photo"
+                        class="rounded-full h-20 w-20 object-cover ml-auto mr-auto">
+                </div>
+
+                <!-- New Profile Photo Preview -->
+                <div class="mt-2" v-show="photoPreview">
+                    <img
+                        :src="photoPreview"
+                        style="width: clamp(6rem, 20vw, 10rem); height: clamp(6rem, 20vw, 10rem);"
+                        alt="Current Profile Photo"
+                        class="rounded-full h-20 w-20 object-cover ml-auto mr-auto">
+                </div>
+
+                <div class="text-center">
+                    <jet-secondary-button class="mt-2 mr-2" type="button" @click.native.prevent="selectNewPhoto">
+                        {{ $__('page.profile:update:photo:select') }}
+                    </jet-secondary-button>
+
+                    <jet-secondary-button type="button" class="mt-2" @click.native.prevent="deletePhoto" v-if="user.profile_photo_path">
+                        {{ $__('page.profile:update:photo:remove') }}
+                    </jet-secondary-button>
+                </div>
+
+                <jet-input-error :message="form.error('photo')" class="mt-2" />
+            </div>
+
+            <!-- Name -->
+            <div class="col-span-6 sm:col-span-4">
+                <jet-label for="name" v-bind:value="$__('$.fullname')" />
+                <jet-input id="name" type="text" class="mt-1 block w-full" v-model="form.name" autocomplete="name" />
+                <jet-input-error :message="form.error('name')" class="mt-2" />
+            </div>
+
+            <!-- Email -->
+            <div class="col-span-6 sm:col-span-4">
+                <jet-label for="email" v-bind:value="$__('$.email')" />
+                <jet-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" />
+                <jet-input-error :message="form.error('email')" class="mt-2" />
+            </div>
+        </template>
+
+        <template #actions>
+            <jet-action-message :on="form.recentlySuccessful" class="mr-3">
+                {{ $__('$.saved') }}
+            </jet-action-message>
+
+            <jet-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                {{ $__('$.save') }}
+            </jet-button>
+        </template>
+    </jet-form-section>
+</template>
+
+<script>
+    import JetButton from '@/Jetstream/Button'
+    import JetFormSection from '@/Jetstream/FormSection'
+    import JetInput from '@/Jetstream/Input'
+    import JetInputError from '@/Jetstream/InputError'
+    import JetLabel from '@/Jetstream/Label'
+    import JetActionMessage from '@/Jetstream/ActionMessage'
+    import JetSecondaryButton from '@/Jetstream/SecondaryButton'
+
+    export default {
+        components: {
+            JetActionMessage,
+            JetButton,
+            JetFormSection,
+            JetInput,
+            JetInputError,
+            JetLabel,
+            JetSecondaryButton,
+        },
+
+        props: ['user'],
+
+        data() {
+            return {
+                form: this.$inertia.form({
+                    '_method': 'PUT',
+                    name: this.user.name,
+                    email: this.user.email,
+                    photo: null,
+                }, {
+                    bag: 'updateProfileInformation',
+                    resetOnSuccess: false,
+                }),
+
+                photoPreview: null,
+            }
+        },
+
+        methods: {
+            updateProfileInformation() {
+                if (this.$refs.photo) {
+                    this.form.photo = this.$refs.photo.files[0]
+                }
+
+                this.form.post(route('user-profile-information.update'), {
+                    preserveScroll: true
+                });
+            },
+
+            selectNewPhoto() {
+                this.$refs.photo.click();
+            },
+
+            updatePhotoPreview() {
+                const reader = new FileReader();
+
+                reader.onload = (e) => {
+                    this.photoPreview = e.target.result;
+                };
+
+                reader.readAsDataURL(this.$refs.photo.files[0]);
+            },
+
+            deletePhoto() {
+                this.$inertia.delete(route('current-user-photo.destroy'), {
+                    preserveScroll: true,
+                }).then(() => {
+                    this.photoPreview = null
+                });
+            },
+        },
+    }
+</script>
