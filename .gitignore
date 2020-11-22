@@ -1,6 +1,9 @@
+# Common ignorance.
 .vscode
-/laradock
+.idea
+.DS_Store
 
-/volume/build
-
-# Remove this after create-project
+# Structure 
+node_modules
+laradock
+volume/
