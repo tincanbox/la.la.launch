@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -eu
 
 # - - - - - - - - - - - - - - - - - -
 # Service Bootstrap
@@ -8,23 +8,26 @@ set -e
 #
 # - - - - - - - - - - - - - - - - - -
 
+CMD_COMPOSER=composer --quiet --no-ansi --no-interaction
+CMD_ARTISAN=php artisan --no-ansi
+
 # REQ.
 cd /var/www/service
 if [ ! -e /var/www/service ]; then
-    composer global require laravel/installer
+    $CMD_COMPOSER global require laravel/installer
     ~/.composer/vendor/bin/laravel new service
 fi
 
-php artisan config:clear
-php artisan cache:clear
+$CMD_ARTISAN config:clear
+$CMD_ARTISAN cache:clear
 
 # Install
 cd /var/www/service 
-composer require laravel/jetstream
-php artisan jetstream:install inertia --teams
+$CMD_COMPOSER require laravel/jetstream
+$CMD_ARTISAN jetstream:install inertia --teams
 
 # Mig
-php artisan migrate
+$CMD_ARTISAN migrate
 
 # Init
 npm install && npm run dev

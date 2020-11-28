@@ -15,5 +15,11 @@ return [
 
     'failed' => 'ログイン情報に誤りがあります。',
     'throttle' => '試行回数上限に達しました。 :seconds 秒後に再度ログインを行ってください。',
+    'remember_me' => 'サインイン情報を記憶する',
+    'forgot-password-description' => 'パスワードをお忘れですか？でも大丈夫。ご登録いただいているメールアドレス宛てにパスワードリセット用のリンクをお送りしますので、新たなパスワードを再設定してください。',
+    'Email Password Reset Link' => 'パスワードリセットリンクを送信する',
+    'forgot_your_password' => 'パスワードをお忘れですか？',
+    'already_registered' => 'アカウントをお持ちの場合',
+    'do-register' => '新規登録'
 
 ];

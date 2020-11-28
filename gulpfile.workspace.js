@@ -63,18 +63,27 @@ function cmd(args) {
         console.log('data', data);
       });
       proc.on('error', (err) => {
-        term.red(err + '\n');
+        term.red('ProcError: ' + err + '\n');
         rej(new Error('DockerExecutionError: ' + err));
       });
       proc.stdout.on('data', (data) => {
-        term.blue(data + '\n');
+        let out = data.toString().trim();
+        out.length && term.blue(out + '\n');
       });
       proc.stderr.on('data', (data) => {
-        term.red('error: ' + data + '\n');
+        let out = data.toString().trim().replace(/^\s+/, '').trim();
+        if (out.length) {
+          if (out.match(/^([A-Za-z]+)ing /)) {
+            // Docker NNNing descriptions.
+            term.blue(out + '\n');
+          } else {
+            term.red('STDERR: ' + out + '\n');
+          }
+        }
       });
       proc.on('close', (code) => {
         if (code == 0) {
-          term.yellow('🎉 Done!!');
+          term.yellow('🎉 Process execution done!!\n');
           res(code);
         } else {
           rej(new Error('DockerExecutionError: ' + code));
@@ -106,7 +115,8 @@ async function copy(src, dest){
   return await Promise.all(content.map(v => {
     let d = v.replace(src, dest);
     term.yellow(['Coping', v, 'to', d, '\n'].join(' '));
-    return fsp.copyFile(v, d);
+    return fsp.mkdir(path.dirname(d), { recursive: true })
+           .then(() => { fsp.copyFile(v, d) })
   }));
 }
 
@@ -126,8 +136,8 @@ function docker(type, ...args) {
   let env_file = path.resolve(DC.env);
 
   let BAS_CMD = 'docker-compose';
-  let DEF_ARG = ['-f', compose_file, '--env-file=' + env_file];
-  let EXC_ARG = ['exec', '-T', '--user=' + DC.user, DC.workspace];
+  let DEF_ARG = ['-f', compose_file, '--env-file=' + env_file, '--no-ansi', '--log-level', 'ERROR'];
+  let EXC_ARG = ['exec', '-T', '--user=' + DC.user, CONFIG.laradock.workspace];
   let CMD_ARG = [].concat(DEF_ARG);
 
   switch(type){
@@ -145,7 +155,7 @@ function docker(type, ...args) {
     case 'command':
       CMD_ARG = CMD_ARG.concat(EXC_ARG);
       CMD_ARG.push(DC.shell, '-c');
-      CMD_ARG = CMD_ARG.concat(args);
+      CMD_ARG = CMD_ARG.concat(args.join(' '));
       break;
     default:
       throw new Error('Invalid Run Configuration');

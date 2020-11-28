@@ -17,13 +17,15 @@ const bind = W.bind;
 function task_default() {
   return (C, done) => {
     // Do Your Default Things.
+    console.log("help");
   }
 }
 
 function task_install() {
   return async (C, done) => {
+    await docker('run', 'down');
     await docker('run', 'up', '-d', CONFIG.laradock.workspace, ...CONFIG.laradock.target);
-    await docker('command', '')
+    await docker('command', './service/build/bin/bootstrap')
     done();
   }
 }
@@ -37,8 +39,13 @@ function task_launch() {
 
 function task_copy() {
   return async (C, done) => {
-    W.copy('./build/laradock', './laradock')
-      .then(done);
+    await W.copy(__dirname + '/build/laradock', __dirname + '/laradock');
+
+    let service_build_dir = '/service/build';
+    await W.copy(__dirname + '/build/service', __dirname + service_build_dir);
+    await docker('command', 'chown', '-R', CONFIG.docker.user + ':' + CONFIG.docker.group, './' + service_build_dir);
+    await docker('command', 'chmod', '-R', 'ug+x', '.' + service_build_dir);
+    done();
   }
 }
 

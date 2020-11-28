@@ -11,6 +11,7 @@ module.exports = {
 
     docker: {
         user: 'laradock',
+        group: 'laradock',
         file: './laradock/docker-compose.yml',
         shell: '/bin/bash',
         env: './laradock/.env',

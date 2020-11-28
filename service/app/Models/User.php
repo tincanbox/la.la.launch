@@ -16,6 +16,7 @@ class User extends Authenticatable
     use HasFactory;
     use HasProfilePhoto;
     use HasTeams;
+    use Traits\HasMeta;
     use Notifiable;
     use TwoFactorAuthenticatable;
 
