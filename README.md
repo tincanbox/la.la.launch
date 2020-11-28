@@ -1,6 +1,6 @@
-# La.La.Launch
+# La.Ra.Launch
 
-La.La.Launch is really rough Laravel 8 Launcher with Laradock.
+This is really rough Laravel 8 Launcher with Laradock.
 
 `volume/service` directory for default Laravel 8 implementation.
 
@@ -10,18 +10,18 @@ ou can simply overrides .conf or .env files via `build/laradock/EACH_DIR`.
 
 ## Getting started
 
-- build/laradock
-- build/service
-
-
-## Usage
+```
+mkdir YOUR_PROJECT
+cd YOUR_PROJECT
+git clone https://github.com/tincanbox/la.ra.launch.git .
+rm -rf .git
+git init
+```
 
 Just pull this repo and call ./bin/install .
 You dont need to call `docker-compose up` manually.
 
 ```
-git clone THIS_REPO YOUR_PROJECT
-cd YOUR_PROJECT
 npm install
 ./bin/install.sh
 ```
