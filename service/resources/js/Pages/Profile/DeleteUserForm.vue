@@ -1,73 +1,84 @@
 <template>
-    <jet-action-section>
+    <gui-action-section>
         <template #title>
-            Delete Account
+            {{ __('page.profile:delete:title') }}
         </template>
 
         <template #description>
-            Permanently delete your account.
+            {{ __('page.profile:delete:desc') }}
         </template>
 
         <template #content>
             <div class="max-w-xl text-sm text-gray-600">
-                Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.
+                {{ __('page.profile:delete:explain') }}
             </div>
 
             <div class="mt-5">
-                <jet-danger-button @click.native="confirmUserDeletion">
-                    Delete Account
-                </jet-danger-button>
+                <gui-danger-button @click.native="confirmUserDeletion">
+                    {{ __('page.profile:delete:execute') }}
+                </gui-danger-button>
             </div>
 
             <!-- Delete Account Confirmation Modal -->
-            <jet-dialog-modal :show="confirmingUserDeletion" @close="confirmingUserDeletion = false">
+            <gui-dialog-modal
+                :show="confirmingUserDeletion"
+                @close="confirmingUserDeletion = false"
+                >
                 <template #title>
-                    Delete Account
+                    {{ __('page.profile:delete:execute') }}
                 </template>
 
                 <template #content>
-                    Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.
+                    {{ __('page.profile:delete:confirmation') }}
 
                     <div class="mt-4">
-                        <jet-input type="password" class="mt-1 block w-3/4" placeholder="Password"
-                                    ref="password"
-                                    v-model="form.password"
-                                    @keyup.enter.native="deleteUser" />
+                        <gui-input
+                            type="password"
+                            class="mt-1 block w-3/4"
+                            placeholder="Password"
+                            ref="password"
+                            v-model="form.password"
+                            @keyup.enter.native="deleteUser" />
 
-                        <jet-input-error :message="form.error('password')" class="mt-2" />
+                        <gui-input-error :message="form.error('password')" class="mt-2" />
                     </div>
                 </template>
 
                 <template #footer>
-                    <jet-secondary-button @click.native="confirmingUserDeletion = false">
-                        Nevermind
-                    </jet-secondary-button>
+                    <gui-secondary-button @click.native="confirmingUserDeletion = false">
+                        {{ __('$.nevermind') }}
+                    </gui-secondary-button>
 
-                    <jet-danger-button class="ml-2" @click.native="deleteUser" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                        Delete Account
-                    </jet-danger-button>
+                    <gui-danger-button
+                        class="ml-2"
+                        @click.native="deleteUser"
+                        :class="{ 'opacity-25': form.processing }"
+                        :disabled="form.processing"
+                        >
+                        {{ __('page.profile:delete:execute') }}
+                    </gui-danger-button>
                 </template>
-            </jet-dialog-modal>
+            </gui-dialog-modal>
         </template>
-    </jet-action-section>
+    </gui-action-section>
 </template>
 
 <script>
-    import JetActionSection from '@/Jetstream/ActionSection'
-    import JetDialogModal from '@/Jetstream/DialogModal'
-    import JetDangerButton from '@/Jetstream/DangerButton'
-    import JetInput from '@/Jetstream/Input'
-    import JetInputError from '@/Jetstream/InputError'
-    import JetSecondaryButton from '@/Jetstream/SecondaryButton'
+    import GuiActionSection from '@/Component/ActionSection'
+    import GuiDialogModal from '@/Component/DialogModal'
+    import GuiDangerButton from '@/Component/DangerButton'
+    import GuiInput from '@/Component/Input'
+    import GuiInputError from '@/Component/InputError'
+    import GuiSecondaryButton from '@/Component/SecondaryButton'
 
     export default {
         components: {
-            JetActionSection,
-            JetDangerButton,
-            JetDialogModal,
-            JetInput,
-            JetInputError,
-            JetSecondaryButton,
+            GuiActionSection,
+            GuiDangerButton,
+            GuiDialogModal,
+            GuiInput,
+            GuiInputError,
+            GuiSecondaryButton,
         },
 
         data() {

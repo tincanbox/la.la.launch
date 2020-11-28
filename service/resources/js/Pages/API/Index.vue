@@ -19,7 +19,7 @@
 <script>
     import ApiTokenManager from './ApiTokenManager'
     import AppLayout from '@/Layouts/AppLayout'
-    import JetSectionBorder from '@/Jetstream/SectionBorder'
+    import GuiSectionBorder from '@/Component/SectionBorder'
 
     export default {
         props: [
@@ -31,7 +31,7 @@
         components: {
             ApiTokenManager,
             AppLayout,
-            JetSectionBorder,
+            GuiSectionBorder,
         },
     }
 </script>

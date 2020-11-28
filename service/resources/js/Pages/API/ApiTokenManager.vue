@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Generate API Token -->
-        <jet-form-section @submitted="createApiToken">
+        <gui-form-section @submitted="createApiToken">
             <template #title>
                 Create API Token
             </template>
@@ -13,14 +13,14 @@
             <template #form>
                 <!-- Token Name -->
                 <div class="col-span-6 sm:col-span-4">
-                    <jet-label for="name" value="Name" />
-                    <jet-input id="name" type="text" class="mt-1 block w-full" v-model="createApiTokenForm.name" autofocus />
-                    <jet-input-error :message="createApiTokenForm.error('name')" class="mt-2" />
+                    <gui-label for="name" value="Name" />
+                    <gui-input id="name" type="text" class="mt-1 block w-full" v-model="createApiTokenForm.name" autofocus />
+                    <gui-input-error :message="createApiTokenForm.error('name')" class="mt-2" />
                 </div>
 
                 <!-- Token Permissions -->
                 <div class="col-span-6" v-if="availablePermissions.length > 0">
-                    <jet-label for="permissions" value="Permissions" />
+                    <gui-label for="permissions" value="Permissions" />
 
                     <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div v-for="permission in availablePermissions" :key="permission">
@@ -34,22 +34,22 @@
             </template>
 
             <template #actions>
-                <jet-action-message :on="createApiTokenForm.recentlySuccessful" class="mr-3">
+                <gui-action-message :on="createApiTokenForm.recentlySuccessful" class="mr-3">
                     Created.
-                </jet-action-message>
+                </gui-action-message>
 
-                <jet-button :class="{ 'opacity-25': createApiTokenForm.processing }" :disabled="createApiTokenForm.processing">
+                <gui-button :class="{ 'opacity-25': createApiTokenForm.processing }" :disabled="createApiTokenForm.processing">
                     Create
-                </jet-button>
+                </gui-button>
             </template>
-        </jet-form-section>
+        </gui-form-section>
 
         <div v-if="tokens.length > 0">
-            <jet-section-border />
+            <gui-section-border />
 
             <!-- Manage API Tokens -->
             <div class="mt-10 sm:mt-0">
-                <jet-action-section>
+                <gui-action-section>
                     <template #title>
                         Manage API Tokens
                     </template>
@@ -84,12 +84,12 @@
                             </div>
                         </div>
                     </template>
-                </jet-action-section>
+                </gui-action-section>
             </div>
         </div>
 
         <!-- Token Value Modal -->
-        <jet-dialog-modal :show="displayingToken" @close="displayingToken = false">
+        <gui-dialog-modal :show="displayingToken" @close="displayingToken = false">
             <template #title>
                 API Token
             </template>
@@ -105,14 +105,14 @@
             </template>
 
             <template #footer>
-                <jet-secondary-button @click.native="displayingToken = false">
+                <gui-secondary-button @click.native="displayingToken = false">
                     Close
-                </jet-secondary-button>
+                </gui-secondary-button>
             </template>
-        </jet-dialog-modal>
+        </gui-dialog-modal>
 
         <!-- API Token Permissions Modal -->
-        <jet-dialog-modal :show="managingPermissionsFor" @close="managingPermissionsFor = null">
+        <gui-dialog-modal :show="managingPermissionsFor" @close="managingPermissionsFor = null">
             <template #title>
                 API Token Permissions
             </template>
@@ -129,18 +129,18 @@
             </template>
 
             <template #footer>
-                <jet-secondary-button @click.native="managingPermissionsFor = null">
+                <gui-secondary-button @click.native="managingPermissionsFor = null">
                     Nevermind
-                </jet-secondary-button>
+                </gui-secondary-button>
 
-                <jet-button class="ml-2" @click.native="updateApiToken" :class="{ 'opacity-25': updateApiTokenForm.processing }" :disabled="updateApiTokenForm.processing">
+                <gui-button class="ml-2" @click.native="updateApiToken" :class="{ 'opacity-25': updateApiTokenForm.processing }" :disabled="updateApiTokenForm.processing">
                     Save
-                </jet-button>
+                </gui-button>
             </template>
-        </jet-dialog-modal>
+        </gui-dialog-modal>
 
         <!-- Delete Token Confirmation Modal -->
-        <jet-confirmation-modal :show="apiTokenBeingDeleted" @close="apiTokenBeingDeleted = null">
+        <gui-confirmation-modal :show="apiTokenBeingDeleted" @close="apiTokenBeingDeleted = null">
             <template #title>
                 Delete API Token
             </template>
@@ -150,46 +150,46 @@
             </template>
 
             <template #footer>
-                <jet-secondary-button @click.native="apiTokenBeingDeleted = null">
+                <gui-secondary-button @click.native="apiTokenBeingDeleted = null">
                     Nevermind
-                </jet-secondary-button>
+                </gui-secondary-button>
 
-                <jet-danger-button class="ml-2" @click.native="deleteApiToken" :class="{ 'opacity-25': deleteApiTokenForm.processing }" :disabled="deleteApiTokenForm.processing">
+                <gui-danger-button class="ml-2" @click.native="deleteApiToken" :class="{ 'opacity-25': deleteApiTokenForm.processing }" :disabled="deleteApiTokenForm.processing">
                     Delete
-                </jet-danger-button>
+                </gui-danger-button>
             </template>
-        </jet-confirmation-modal>
+        </gui-confirmation-modal>
     </div>
 </template>
 
 <script>
-    import JetActionMessage from '@/Jetstream/ActionMessage'
-    import JetActionSection from '@/Jetstream/ActionSection'
-    import JetButton from '@/Jetstream/Button'
-    import JetConfirmationModal from '@/Jetstream/ConfirmationModal'
-    import JetDangerButton from '@/Jetstream/DangerButton'
-    import JetDialogModal from '@/Jetstream/DialogModal'
-    import JetFormSection from '@/Jetstream/FormSection'
-    import JetInput from '@/Jetstream/Input'
-    import JetInputError from '@/Jetstream/InputError'
-    import JetLabel from '@/Jetstream/Label'
-    import JetSecondaryButton from '@/Jetstream/SecondaryButton'
-    import JetSectionBorder from '@/Jetstream/SectionBorder'
+    import GuiActionMessage from '@/Component/ActionMessage'
+    import GuiActionSection from '@/Component/ActionSection'
+    import GuiButton from '@/Component/Button'
+    import GuiConfirmationModal from '@/Component/ConfirmationModal'
+    import GuiDangerButton from '@/Component/DangerButton'
+    import GuiDialogModal from '@/Component/DialogModal'
+    import GuiFormSection from '@/Component/FormSection'
+    import GuiInput from '@/Component/Input'
+    import GuiInputError from '@/Component/InputError'
+    import GuiLabel from '@/Component/Label'
+    import GuiSecondaryButton from '@/Component/SecondaryButton'
+    import GuiSectionBorder from '@/Component/SectionBorder'
 
     export default {
         components: {
-            JetActionMessage,
-            JetActionSection,
-            JetButton,
-            JetConfirmationModal,
-            JetDangerButton,
-            JetDialogModal,
-            JetFormSection,
-            JetInput,
-            JetInputError,
-            JetLabel,
-            JetSecondaryButton,
-            JetSectionBorder,
+            GuiActionMessage,
+            GuiActionSection,
+            GuiButton,
+            GuiConfirmationModal,
+            GuiDangerButton,
+            GuiDialogModal,
+            GuiFormSection,
+            GuiInput,
+            GuiInputError,
+            GuiLabel,
+            GuiSecondaryButton,
+            GuiSectionBorder,
         },
 
         props: [

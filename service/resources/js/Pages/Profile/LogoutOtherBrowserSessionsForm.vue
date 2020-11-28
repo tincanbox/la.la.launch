@@ -1,16 +1,16 @@
 <template>
-    <jet-action-section>
+    <gui-action-section>
         <template #title>
-            Browser Sessions
+            {{ __('page.profile:loginsession:title') }}
         </template>
 
         <template #description>
-            Manage and logout your active sessions on other browsers and devices.
+            {{ __('page.profile:loginsession:desc') }}
         </template>
 
         <template #content>
             <div class="max-w-xl text-sm text-gray-600">
-                If necessary, you may logout of all of your other browser sessions across all of your devices. Some of your recent sessions are listed below; however, this list may not be exhaustive. If you feel your account has been compromised, you should also update your password.
+                {{ __('page.profile:loginsession:explain') }}
             </div>
 
             <!-- Other Browser Sessions -->
@@ -35,8 +35,15 @@
                             <div class="text-xs text-gray-500">
                                 {{ session.ip_address }},
 
-                                <span class="text-green-500 font-semibold" v-if="session.is_current_device">This device</span>
-                                <span v-else>Last active {{ session.last_active }}</span>
+                                <span
+                                    v-if="session.is_current_device"
+                                    class="text-green-500 font-semibold"
+                                    >{{ __('page.profile:loginsession:currentdevice') }}</span>
+                                <span
+                                    v-else
+                                    >
+                                    {{ __('page.profile:loginsession:lastactive(:date)', { date: session.last_active }) }}
+                                    </span>
                             </div>
                         </div>
                     </div>
@@ -44,68 +51,74 @@
             </div>
 
             <div class="flex items-center mt-5">
-                <jet-button @click.native="confirmLogout">
-                    Logout Other Browser Sessions
-                </jet-button>
+                <gui-button @click.native="confirmLogout">
+                    {{ __('page.profile:loginsession:execute') }}
+                </gui-button>
 
-                <jet-action-message :on="form.recentlySuccessful" class="ml-3">
-                    Done.
-                </jet-action-message>
+                <gui-action-message :on="form.recentlySuccessful" class="ml-3">
+                    {{ __('$.done') }}
+                </gui-action-message>
             </div>
 
             <!-- Logout Other Devices Confirmation Modal -->
-            <jet-dialog-modal :show="confirmingLogout" @close="confirmingLogout = false">
+            <gui-dialog-modal :show="confirmingLogout" @close="confirmingLogout = false">
                 <template #title>
-                    Logout Other Browser Sessions
+                    {{ __('page.profile:loginsession:execute') }}
                 </template>
 
                 <template #content>
-                    Please enter your password to confirm you would like to logout of your other browser sessions across all of your devices.
+                    {{ __('page.profile:loginsession:execute_password') }}
 
                     <div class="mt-4">
-                        <jet-input type="password" class="mt-1 block w-3/4" placeholder="Password"
+                        <gui-input type="password" class="mt-1 block w-3/4" placeholder="Password"
                                     ref="password"
                                     v-model="form.password"
                                     @keyup.enter.native="logoutOtherBrowserSessions" />
 
-                        <jet-input-error :message="form.error('password')" class="mt-2" />
+                        <gui-input-error :message="form.error('password')" class="mt-2" />
                     </div>
                 </template>
 
                 <template #footer>
-                    <jet-secondary-button @click.native="confirmingLogout = false">
-                        Nevermind
-                    </jet-secondary-button>
+                    <gui-secondary-button @click.native="confirmingLogout = false">
+                        {{ __('$.nevermind') }}
+                    </gui-secondary-button>
 
-                    <jet-button class="ml-2" @click.native="logoutOtherBrowserSessions" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                        Logout Other Browser Sessions
-                    </jet-button>
+                    <gui-button
+                        class="ml-2"
+                        @click.native="logoutOtherBrowserSessions"
+                        :class="{ 'opacity-25': form.processing }"
+                        :disabled="form.processing"
+                        >
+                        {{ __('page.profile:loginsession:execute') }}
+                    </gui-button>
+
                 </template>
-            </jet-dialog-modal>
+            </gui-dialog-modal>
         </template>
-    </jet-action-section>
+    </gui-action-section>
 </template>
 
 <script>
-    import JetActionMessage from '@/Jetstream/ActionMessage'
-    import JetActionSection from '@/Jetstream/ActionSection'
-    import JetButton from '@/Jetstream/Button'
-    import JetDialogModal from '@/Jetstream/DialogModal'
-    import JetInput from '@/Jetstream/Input'
-    import JetInputError from '@/Jetstream/InputError'
-    import JetSecondaryButton from '@/Jetstream/SecondaryButton'
+    import GuiActionMessage from '@/Component/ActionMessage'
+    import GuiActionSection from '@/Component/ActionSection'
+    import GuiButton from '@/Component/Button'
+    import GuiDialogModal from '@/Component/DialogModal'
+    import GuiInput from '@/Component/Input'
+    import GuiInputError from '@/Component/InputError'
+    import GuiSecondaryButton from '@/Component/SecondaryButton'
 
     export default {
         props: ['sessions'],
 
         components: {
-            JetActionMessage,
-            JetActionSection,
-            JetButton,
-            JetDialogModal,
-            JetInput,
-            JetInputError,
-            JetSecondaryButton,
+            GuiActionMessage,
+            GuiActionSection,
+            GuiButton,
+            GuiDialogModal,
+            GuiInput,
+            GuiInputError,
+            GuiSecondaryButton,
         },
 
         data() {

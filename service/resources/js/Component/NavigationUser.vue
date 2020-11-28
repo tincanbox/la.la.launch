@@ -85,9 +85,9 @@
 <script>
 
     import ApplicationMark from '@/SVG/ApplicationMark'
-    import NavLink from '@/Component/NavLink'
-    import Dropdown from '@/Component/Dropdown'
-    import DropdownLink from '@/Component/DropdownLink'
+    import NavLink from './NavLink'
+    import Dropdown from './Dropdown'
+    import DropdownLink from './DropdownLink'
 
     export default {
         components: {

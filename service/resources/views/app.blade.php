@@ -38,6 +38,8 @@
         .navbar-toggler:not(.collapsed) .icon-bar:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); transition: ease all .2s; }
         </style>
 
+        @translations
+
     </head>
     <body class="font-sans antialiased">
         @inertia

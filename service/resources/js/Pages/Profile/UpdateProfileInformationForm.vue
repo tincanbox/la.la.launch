@@ -1,91 +1,128 @@
 <template>
-    <jet-form-section @submitted="updateProfileInformation">
+    <gui-form-section @submitted="updateProfileInformation">
         <template #title>
-            Profile Information
+            {{ __('page.profile:update:title') }}
         </template>
 
         <template #description>
-            Update your account's profile information and email address.
+            {{ __('page.profile:update:desc') }}
         </template>
 
         <template #form>
             <!-- Profile Photo -->
-            <div class="col-span-6 sm:col-span-4" v-if="$page.jetstream.managesProfilePhotos">
+            <div v-if="$page.jetstream.managesProfilePhotos">
                 <!-- Profile Photo File Input -->
                 <input type="file" class="hidden"
                             ref="photo"
                             @change="updatePhotoPreview">
 
-                <jet-label for="photo" value="Photo" />
+                <gui-label for="photo" :value="__('page.profile:update:photo')" />
 
-                <!-- Current Profile Photo -->
-                <div class="mt-2" v-show="! photoPreview">
-                    <img :src="user.profile_photo_url" alt="Current Profile Photo" class="rounded-full h-20 w-20 object-cover">
+                <div class="row mb-3">
+
+                    <!-- Current Profile Photo -->
+                    <div class="col-12 m-auto" v-show="! photoPreview">
+                        <img
+                            :src="user.profile_photo_url"
+                            alt="Current Profile Photo" 
+                            class="profile-photo-preview rounded-full object-cover"
+                            :style="photoPreviewStyle"
+                            >
+                    </div>
+
+                    <!-- New Profile Photo Preview -->
+                    <div class="col-12 m-auto" v-show="photoPreview">
+                        <span
+                            class="profile-photo-preview block rounded-full"
+                            :style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');' + photoPreviewStyle">
+                        </span>
+                    </div>
+
                 </div>
 
-                <!-- New Profile Photo Preview -->
-                <div class="mt-2" v-show="photoPreview">
-                    <span class="block rounded-full w-20 h-20"
-                          :style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'">
-                    </span>
+                <div class="row mb-3">
+                    <div class="col-12 text-center">
+
+                    <gui-secondary-button
+                        @click.native.prevent="selectNewPhoto"
+                        class="mt-2 mr-2"
+                        type="button"
+                        >
+                        {{ __('page.profile:update:photo:select') }}
+                    </gui-secondary-button>
+
+                    <gui-secondary-button
+                        v-if="user.profile_photo_path"
+                        @click.native.prevent="deletePhoto"
+                        type="button"
+                        class="mt-2 mr-2"
+                        >
+                        {{ __('page.profile:update:photo:remove') }}
+                    </gui-secondary-button>
+
+                    <gui-secondary-button
+                        v-if="photoPreview"
+                        @click.native.prevent="cancelPhoto"
+                        type="button"
+                        class="mt-2 mr-2"
+                        >
+                        {{ __('$.nevermind') }}
+                    </gui-secondary-button>
+
+                    <gui-input-error :message="form.error('photo')" class="mt-2" />
+
+                    </div>
                 </div>
 
-                <jet-secondary-button class="mt-2 mr-2" type="button" @click.native.prevent="selectNewPhoto">
-                    Select A New Photo
-                </jet-secondary-button>
-
-                <jet-secondary-button type="button" class="mt-2" @click.native.prevent="deletePhoto" v-if="user.profile_photo_path">
-                    Remove Photo
-                </jet-secondary-button>
-
-                <jet-input-error :message="form.error('photo')" class="mt-2" />
             </div>
 
-            <!-- Name -->
-            <div class="col-span-6 sm:col-span-4">
-                <jet-label for="name" value="Name" />
-                <jet-input id="name" type="text" class="mt-1 block w-full" v-model="form.name" autocomplete="name" />
-                <jet-input-error :message="form.error('name')" class="mt-2" />
-            </div>
+            <div class="row mb-5">
+                <!-- Name -->
+                <div class="col-12 col-md-10 mb-3">
+                    <gui-label for="name" :value="__('$.fullname')" />
+                    <gui-input id="name" type="text" class="mt-1 block w-full" v-model="form.name" autocomplete="name" />
+                    <gui-input-error :message="form.error('name')" class="mt-2" />
+                </div>
 
-            <!-- Email -->
-            <div class="col-span-6 sm:col-span-4">
-                <jet-label for="email" value="Email" />
-                <jet-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" />
-                <jet-input-error :message="form.error('email')" class="mt-2" />
+                <!-- Email -->
+                <div class="col-12 col-md-10 mb-3">
+                    <gui-label for="email" :value="__('$.email')" />
+                    <gui-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" />
+                    <gui-input-error :message="form.error('email')" class="mt-2" />
+                </div>
             </div>
         </template>
 
         <template #actions>
-            <jet-action-message :on="form.recentlySuccessful" class="mr-3">
-                Saved.
-            </jet-action-message>
+            <gui-action-message :on="form.recentlySuccessful" class="mr-3">
+                {{ __('$.saved') }}
+            </gui-action-message>
 
-            <jet-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Save
-            </jet-button>
+            <gui-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                {{ __('$.save') }}
+            </gui-button>
         </template>
-    </jet-form-section>
+    </gui-form-section>
 </template>
 
 <script>
-    import JetButton from '@/Jetstream/Button'
-    import JetFormSection from '@/Jetstream/FormSection'
-    import JetInput from '@/Jetstream/Input'
-    import JetInputError from '@/Jetstream/InputError'
-    import JetLabel from '@/Jetstream/Label'
-    import JetActionMessage from '@/Jetstream/ActionMessage'
-    import JetSecondaryButton from '@/Jetstream/SecondaryButton'
+    import GuiButton from '@/Component/Button'
+    import GuiFormSection from '@/Component/FormSection'
+    import GuiInput from '@/Component/Input'
+    import GuiInputError from '@/Component/InputError'
+    import GuiLabel from '@/Component/Label'
+    import GuiActionMessage from '@/Component/ActionMessage'
+    import GuiSecondaryButton from '@/Component/SecondaryButton'
 
     export default {
         components: {
-            JetActionMessage,
-            JetButton,
-            JetFormSection,
-            JetInput,
-            JetInputError,
-            JetLabel,
-            JetSecondaryButton,
+            GuiActionMessage,
+            GuiButton,
+            GuiFormSection,
+            GuiInput,
+            GuiInputError,
+            GuiLabel,
+            GuiSecondaryButton,
         },
 
         props: ['user'],
@@ -103,6 +140,8 @@
                 }),
 
                 photoPreview: null,
+
+                photoPreviewStyle: "width:clamp(6rem, 40vw, 10rem); height:clamp(6rem, 40vw, 10rem);margin:auto;"
             }
         },
 
@@ -129,6 +168,11 @@
                 };
 
                 reader.readAsDataURL(this.$refs.photo.files[0]);
+            },
+
+            cancelPhoto(){
+                this.photoPreview = null;
+                this.$refs.photo.value = null;
             },
 
             deletePhoto() {

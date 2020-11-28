@@ -17,7 +17,7 @@
 <script>
     import AppLayout from '@/Layouts/AppLayout'
     import CreateTeamForm from './CreateTeamForm'
-    import JetSectionBorder from '@/Jetstream/SectionBorder'
+    import GuiSectionBorder from '@/Component/SectionBorder'
 
     export default {
         props: ['team'],
@@ -25,7 +25,7 @@
         components: {
             AppLayout,
             CreateTeamForm,
-            JetSectionBorder,
+            GuiSectionBorder,
         },
     }
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <jet-form-section @submitted="updateTeamName">
+    <gui-form-section @submitted="updateTeamName">
         <template #title>
             Team Name
         </template>
@@ -11,7 +11,7 @@
         <template #form>
             <!-- Team Owner Information -->
             <div class="col-span-6">
-                <jet-label value="Team Owner" />
+                <gui-label value="Team Owner" />
 
                 <div class="flex items-center mt-2">
                     <img class="w-12 h-12 rounded-full object-cover" :src="team.owner.profile_photo_url" :alt="team.owner.name">
@@ -25,37 +25,37 @@
 
             <!-- Team Name -->
             <div class="col-span-6 sm:col-span-4">
-                <jet-label for="name" value="Team Name" />
+                <gui-label for="name" value="Team Name" />
 
-                <jet-input id="name"
+                <gui-input id="name"
                             type="text"
                             class="mt-1 block w-full"
                             v-model="form.name"
                             :disabled="! permissions.canUpdateTeam" />
 
-                <jet-input-error :message="form.error('name')" class="mt-2" />
+                <gui-input-error :message="form.error('name')" class="mt-2" />
             </div>
         </template>
 
         <template #actions v-if="permissions.canUpdateTeam">
-            <jet-action-message :on="form.recentlySuccessful" class="mr-3">
+            <gui-action-message :on="form.recentlySuccessful" class="mr-3">
                 Saved.
-            </jet-action-message>
+            </gui-action-message>
 
-            <jet-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+            <gui-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                 Save
-            </jet-button>
+            </gui-button>
         </template>
-    </jet-form-section>
+    </gui-form-section>
 </template>
 
 <script>
-    import JetActionMessage from '@/Jetstream/ActionMessage'
-    import JetButton from '@/Jetstream/Button'
-    import JetFormSection from '@/Jetstream/FormSection'
-    import JetInput from '@/Jetstream/Input'
-    import JetInputError from '@/Jetstream/InputError'
-    import JetLabel from '@/Jetstream/Label'
+    import JetActionMessage from '@/Component/ActionMessage'
+    import JetButton from '@/Component/Button'
+    import JetFormSection from '@/Component/FormSection'
+    import JetInput from '@/Component/Input'
+    import JetInputError from '@/Component/InputError'
+    import JetLabel from '@/Component/Label'
 
     export default {
         components: {

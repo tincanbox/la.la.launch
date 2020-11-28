@@ -6,7 +6,7 @@
             <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 
                 <button
-                    class="navbar-toggler collapsed"
+                    class="navbar-nav navbar-toggler collapsed"
                     type="button"
                     data-toggle="collapse" data-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"
@@ -18,18 +18,15 @@
                 </button>
 
                 <a
-                    class="navbar-brand"
+                    class="navbar-brand navbar-nav"
                     :href="route('dashboard')"
                     style="margin-right: auto;"
                     >
                     WEBAPP</a>
 
-                <!-- Settings Dropdown -->
-                <nav-profile />
-
                 <div
                     id="navbarCollapse"
-                    class="collapse navbar-collapse"
+                    class="navbar-nav collapse navbar-collapse"
                     >
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
@@ -37,6 +34,14 @@
                         </li>
                     </ul>
 
+                </div>
+
+                <div
+                    class=""
+                    style="position: fixed; right: 1em; top: 10px;"
+                    >
+                    <!-- Settings Dropdown -->
+                    <nav-profile />
                 </div>
 
            </nav>
@@ -61,40 +66,16 @@
 </template>
 
 <script>
-    import Dropdown from '@/Component/Dropdown'
-    import DropdownLink from '@/Component/DropdownLink'
-    import NavLink from '@/Component/NavLink'
-    import NavProfile from '@/Component/NavProfile'
-    import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink'
+import NavLink from '@/Component/NavLink'
+import NavProfile from '@/Component/NavProfile'
 
-    export default {
-        components: {
-            Dropdown,
-            DropdownLink,
-            NavLink,
-            NavProfile
-        },
+export default {
+    components: {
+        NavLink,
+        NavProfile
+    },
 
-        data() {
-            return {
-                showingNavigationDropdown: false,
-            }
-        },
-
-        methods: {
-            switchToTeam(team) {
-                this.$inertia.put(route('current-team.update'), {
-                    'team_id': team.id
-                }, {
-                    preserveState: false
-                })
-            },
-
-            logout() {
-                axios.post(route('logout').url()).then(response => {
-                    window.location = '/';
-                })
-            },
-        }
+    methods: {
     }
+}
 </script>

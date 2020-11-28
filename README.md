@@ -26,13 +26,22 @@ npm install
 ./bin/install.sh
 ```
 
-### Develop
+## Develop
+
+
+### Webpack
+
+Just run npm command.
 
 ```
 # Develop
 cd service
 npm run watch
 ```
+
+### Translation
+
+https://github.com/GENL/matice
 
 ## Structure
 

@@ -687,24 +687,23 @@
         },
         {
             "name": "genl/matice",
-            "version": "1.1.1",
+            "version": "1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/GENL/matice.git",
-                "reference": "6e56d21695d2e67072dcffaa5d27f030e4bf758d"
+                "reference": "7c3f1198056fa4d4b7eb2f3ba33a4b0e825296df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GENL/matice/zipball/6e56d21695d2e67072dcffaa5d27f030e4bf758d",
-                "reference": "6e56d21695d2e67072dcffaa5d27f030e4bf758d",
+                "url": "https://api.github.com/repos/GENL/matice/zipball/7c3f1198056fa4d4b7eb2f3ba33a4b0e825296df",
+                "reference": "7c3f1198056fa4d4b7eb2f3ba33a4b0e825296df",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": ">=5.4@dev"
+                "laravel/framework": ">=6.0@dev"
             },
             "require-dev": {
-                "orchestra/testbench": "^5.0",
-                "phpunit/phpunit": "^8.0"
+                "orchestra/testbench": "^5.0"
             },
             "type": "library",
             "extra": {
@@ -742,9 +741,9 @@
             ],
             "support": {
                 "issues": "https://github.com/GENL/matice/issues",
-                "source": "https://github.com/GENL/matice/tree/1.1.1"
+                "source": "https://github.com/GENL/matice/tree/1.1.3"
             },
-            "time": "2020-10-16T02:41:29+00:00"
+            "time": "2020-11-25T18:01:18+00:00"
         },
         {
             "name": "graham-campbell/result-type",

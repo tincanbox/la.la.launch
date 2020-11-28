@@ -1,10 +1,10 @@
 <template>
     <div>
         <div v-if="userPermissions.canAddTeamMembers">
-            <jet-section-border />
+            <gui-section-border />
 
             <!-- Add Team Member -->
-            <jet-form-section @submitted="addTeamMember">
+            <gui-form-section @submitted="addTeamMember">
                 <template #title>
                     Add Team Member
                 </template>
@@ -22,15 +22,15 @@
 
                     <!-- Member Email -->
                     <div class="col-span-6 sm:col-span-4">
-                        <jet-label for="email" value="Email" />
-                        <jet-input id="email" type="text" class="mt-1 block w-full" v-model="addTeamMemberForm.email" />
-                        <jet-input-error :message="addTeamMemberForm.error('email')" class="mt-2" />
+                        <gui-label for="email" value="Email" />
+                        <gui-input id="email" type="text" class="mt-1 block w-full" v-model="addTeamMemberForm.email" />
+                        <gui-input-error :message="addTeamMemberForm.error('email')" class="mt-2" />
                     </div>
 
                     <!-- Role -->
                     <div class="col-span-6 lg:col-span-4" v-if="availableRoles.length > 0">
-                        <jet-label for="roles" value="Role" />
-                        <jet-input-error :message="addTeamMemberForm.error('role')" class="mt-2" />
+                        <gui-label for="roles" value="Role" />
+                        <gui-input-error :message="addTeamMemberForm.error('role')" class="mt-2" />
 
                         <div class="mt-1 border border-gray-200 rounded-lg cursor-pointer">
                             <div class="px-4 py-3"
@@ -60,22 +60,22 @@
                 </template>
 
                 <template #actions>
-                    <jet-action-message :on="addTeamMemberForm.recentlySuccessful" class="mr-3">
+                    <gui-action-message :on="addTeamMemberForm.recentlySuccessful" class="mr-3">
                         Added.
-                    </jet-action-message>
+                    </gui-action-message>
 
-                    <jet-button :class="{ 'opacity-25': addTeamMemberForm.processing }" :disabled="addTeamMemberForm.processing">
+                    <gui-button :class="{ 'opacity-25': addTeamMemberForm.processing }" :disabled="addTeamMemberForm.processing">
                         Add
-                    </jet-button>
+                    </gui-button>
                 </template>
-            </jet-form-section>
+            </gui-form-section>
         </div>
 
         <div v-if="team.users.length > 0">
-            <jet-section-border />
+            <gui-section-border />
 
             <!-- Manage Team Members -->
-            <jet-action-section class="mt-10 sm:mt-0">
+            <gui-action-section class="mt-10 sm:mt-0">
                 <template #title>
                     Team Members
                 </template>
@@ -122,11 +122,11 @@
                         </div>
                     </div>
                 </template>
-            </jet-action-section>
+            </gui-action-section>
         </div>
 
         <!-- Role Management Modal -->
-        <jet-dialog-modal :show="currentlyManagingRole" @close="currentlyManagingRole = false">
+        <gui-dialog-modal :show="currentlyManagingRole" @close="currentlyManagingRole = false">
             <template #title>
                 Manage Role
             </template>
@@ -161,18 +161,18 @@
             </template>
 
             <template #footer>
-                <jet-secondary-button @click.native="currentlyManagingRole = false">
+                <gui-secondary-button @click.native="currentlyManagingRole = false">
                     Nevermind
-                </jet-secondary-button>
+                </gui-secondary-button>
 
-                <jet-button class="ml-2" @click.native="updateRole" :class="{ 'opacity-25': updateRoleForm.processing }" :disabled="updateRoleForm.processing">
+                <gui-button class="ml-2" @click.native="updateRole" :class="{ 'opacity-25': updateRoleForm.processing }" :disabled="updateRoleForm.processing">
                     Save
-                </jet-button>
+                </gui-button>
             </template>
-        </jet-dialog-modal>
+        </gui-dialog-modal>
 
         <!-- Leave Team Confirmation Modal -->
-        <jet-confirmation-modal :show="confirmingLeavingTeam" @close="confirmingLeavingTeam = false">
+        <gui-confirmation-modal :show="confirmingLeavingTeam" @close="confirmingLeavingTeam = false">
             <template #title>
                 Leave Team
             </template>
@@ -182,18 +182,18 @@
             </template>
 
             <template #footer>
-                <jet-secondary-button @click.native="confirmingLeavingTeam = false">
-                    Nevermind
-                </jet-secondary-button>
+                <gui-secondary-button @click.native="confirmingLeavingTeam = false">
+                    {{ __('$.nevermind') }}
+                </gui-secondary-button>
 
-                <jet-danger-button class="ml-2" @click.native="leaveTeam" :class="{ 'opacity-25': leaveTeamForm.processing }" :disabled="leaveTeamForm.processing">
-                    Leave
-                </jet-danger-button>
+                <gui-danger-button class="ml-2" @click.native="leaveTeam" :class="{ 'opacity-25': leaveTeamForm.processing }" :disabled="leaveTeamForm.processing">
+                    {{ __('$.leave') }}
+                </gui-danger-button>
             </template>
-        </jet-confirmation-modal>
+        </gui-confirmation-modal>
 
         <!-- Remove Team Member Confirmation Modal -->
-        <jet-confirmation-modal :show="teamMemberBeingRemoved" @close="teamMemberBeingRemoved = null">
+        <gui-confirmation-modal :show="teamMemberBeingRemoved" @close="teamMemberBeingRemoved = null">
             <template #title>
                 Remove Team Member
             </template>
@@ -203,46 +203,46 @@
             </template>
 
             <template #footer>
-                <jet-secondary-button @click.native="teamMemberBeingRemoved = null">
+                <gui-secondary-button @click.native="teamMemberBeingRemoved = null">
                     Nevermind
-                </jet-secondary-button>
+                </gui-secondary-button>
 
-                <jet-danger-button class="ml-2" @click.native="removeTeamMember" :class="{ 'opacity-25': removeTeamMemberForm.processing }" :disabled="removeTeamMemberForm.processing">
+                <gui-danger-button class="ml-2" @click.native="removeTeamMember" :class="{ 'opacity-25': removeTeamMemberForm.processing }" :disabled="removeTeamMemberForm.processing">
                     Remove
-                </jet-danger-button>
+                </gui-danger-button>
             </template>
-        </jet-confirmation-modal>
+        </gui-confirmation-modal>
     </div>
 </template>
 
 <script>
-    import JetActionMessage from '@/Jetstream/ActionMessage'
-    import JetActionSection from '@/Jetstream/ActionSection'
-    import JetButton from '@/Jetstream/Button'
-    import JetConfirmationModal from '@/Jetstream/ConfirmationModal'
-    import JetDangerButton from '@/Jetstream/DangerButton'
-    import JetDialogModal from '@/Jetstream/DialogModal'
-    import JetFormSection from '@/Jetstream/FormSection'
-    import JetInput from '@/Jetstream/Input'
-    import JetInputError from '@/Jetstream/InputError'
-    import JetLabel from '@/Jetstream/Label'
-    import JetSecondaryButton from '@/Jetstream/SecondaryButton'
-    import JetSectionBorder from '@/Jetstream/SectionBorder'
+    import GuiActionMessage from '@/Component/ActionMessage'
+    import GuiActionSection from '@/Component/ActionSection'
+    import GuiButton from '@/Component/Button'
+    import GuiConfirmationModal from '@/Component/ConfirmationModal'
+    import GuiDangerButton from '@/Component/DangerButton'
+    import GuiDialogModal from '@/Component/DialogModal'
+    import GuiFormSection from '@/Component/FormSection'
+    import GuiInput from '@/Component/Input'
+    import GuiInputError from '@/Component/InputError'
+    import GuiLabel from '@/Component/Label'
+    import GuiSecondaryButton from '@/Component/SecondaryButton'
+    import GuiSectionBorder from '@/Component/SectionBorder'
 
     export default {
         components: {
-            JetActionMessage,
-            JetActionSection,
-            JetButton,
-            JetConfirmationModal,
-            JetDangerButton,
-            JetDialogModal,
-            JetFormSection,
-            JetInput,
-            JetInputError,
-            JetLabel,
-            JetSecondaryButton,
-            JetSectionBorder,
+            GuiActionMessage,
+            GuiActionSection,
+            GuiButton,
+            GuiConfirmationModal,
+            GuiDangerButton,
+            GuiDialogModal,
+            GuiFormSection,
+            GuiInput,
+            GuiInputError,
+            GuiLabel,
+            GuiSecondaryButton,
+            GuiSectionBorder,
         },
 
         props: [

@@ -37,8 +37,8 @@
 
 <script>
     import ApplicationMark from '@/SVG/ApplicationMark'
-    import NavigationUser from '@/Component/NavigationUser'
-    import NavLink from '@/Component/NavLink'
+    import NavigationUser from './NavigationUser'
+    import NavLink from './NavLink'
 
     export default {
         components: {
