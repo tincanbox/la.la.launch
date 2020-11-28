@@ -26,6 +26,14 @@ npm install
 ./bin/install.sh
 ```
 
+### Develop
+
+```
+# Develop
+cd service
+npm run watch
+```
+
 ## Structure
 
 /volume directory is fully mounted to /var/www directory on the guest machine.

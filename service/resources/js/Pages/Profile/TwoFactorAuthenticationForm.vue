@@ -1,6 +1,7 @@
 <template>
     <jet-action-section>
         <template #title>
+            {{ __('profile:') }}
             Two Factor Authentication
         </template>
 
@@ -77,7 +78,7 @@
                         <jet-danger-button
                                         :class="{ 'opacity-25': disabling }"
                                         :disabled="disabling">
-                            Disable
+                            {{ __('$.disable') }}
                         </jet-danger-button>
                     </jet-confirms-password>
                 </div>

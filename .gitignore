@@ -7,3 +7,7 @@
 node_modules
 laradock
 volume/
+
+/service/storage/app/*
+/service/storage/framework/*
+!/service/storage/**/*/.gitignore
