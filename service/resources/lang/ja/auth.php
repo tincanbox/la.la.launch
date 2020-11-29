@@ -24,4 +24,9 @@ return [
     // register
     'already_registered' => 'アカウントをお持ちの場合',
     'do-register' => '新規登録',
+    // 2fa
+    '2fa:confirm:explain' => 'アカウントへアクセスするためには、認証アプリケーションより提供されている認証コードを入力してください。',
+    '2fa:recovery:explain' => 'アカウントへアクセスするためには、登録時に提供されているリカバリーコードを入力してください。',
+    '2fa:Use a recovery code' => 'リカバリーコードを使用',
+    '2fa:Use an authentication code' => '認証コードを使用'
 ];

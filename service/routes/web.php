@@ -21,7 +21,8 @@ Inertia::share('app', [
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', function () {
-        return view('welcome');
+        exit(2);
+        return inertia('Dashboard', []);
    });
 });
 
@@ -29,8 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
 Route::middleware(['auth:sanctum', 'verified'])
     ->get('/dashboard', function () {
         return inertia('Dashboard', []);
-    })
-    ->name('dashboard');
+    })->name('dashboard');
 
 
 // FALLBACK

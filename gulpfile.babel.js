@@ -14,14 +14,14 @@ const bind = W.bind;
  *============================================================
  */
 
-function task_default() {
+function do_help() {
   return (C, done) => {
     // Do Your Default Things.
     console.log("help");
   }
 }
 
-function task_install() {
+function do_install() {
   return async (C, done) => {
     await docker('run', 'down');
     await docker('run', 'up', '-d', CONFIG.laradock.workspace, ...CONFIG.laradock.target);
@@ -30,42 +30,55 @@ function task_install() {
   }
 }
 
-function task_launch() {
-  return (C, done) => {
-    docker('run', 'up', '-d', CONFIG.laradock.workspace, ...CONFIG.laradock.target)
-      .then(done);
-  }
-}
-
-function task_copy() {
+function do_launch() {
   return async (C, done) => {
-    await W.copy(__dirname + '/build/laradock', __dirname + '/laradock');
-
-    let service_build_dir = '/service/build';
-    await W.copy(__dirname + '/build/service', __dirname + service_build_dir);
-    await docker('command', 'chown', '-R', CONFIG.docker.user + ':' + CONFIG.docker.group, './' + service_build_dir);
-    await docker('command', 'chmod', '-R', 'ug+x', '.' + service_build_dir);
+    await docker('run', 'up', '-d', CONFIG.laradock.workspace, ...CONFIG.laradock.target)
     done();
   }
 }
 
-function task_stop() {
+function do_fix_permission() {
+  return async (C, done) => {
+    await docker('command', 'chown', '-R', CONFIG.docker.user + ':' + CONFIG.docker.group, './' + CONFIG.service.build);
+    await docker('command', 'chmod', '-R', 'ug+x', './' + CONFIG.service.build);
+    done();
+  }
+}
+
+function do_copy() {
+  return async (C, done) => {
+    await W.copy(__dirname + '/build/laradock', __dirname + '/laradock');
+    await W.copy(__dirname + '/build/service', __dirname + '/' + CONFIG.service.build);
+    done();
+  }
+}
+
+function do_stop() {
   return (C, done) => {
     docker('run', 'stop')
       .then(done)
   }
 }
 
-function task_login() {
+function do_destroy() {
+  return async (C, done) => {
+    await docker('run', 'stop');
+    await docker('run', 'down');
+    done();
+  }
+}
+
+function do_login() {
   return (C, done) => {
     docker('shell')
       .then(done);
   }
 }
 
-task('install', bind('series', task_copy(), task_install()));
-task('launch', bind('series', task_launch()));
-task('login', bind('series', task_login()));
-task('default', bind('series', task_default()));
-task('halt', bind('series', task_stop()));
-task('copy', bind('series', task_copy()));
+task('default', bind('series', do_help()));
+task('install', bind('series', do_copy(), do_launch(), do_fix_permission(), do_install()));
+task('launch',  bind('series', do_copy(), do_launch(), do_fix_permission()));
+task('login',   bind('series', do_login()));
+task('halt',    bind('series', do_stop()));
+task('copy',    bind('series', do_copy()));
+task('destroy', bind('series', do_destroy()));

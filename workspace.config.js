@@ -17,6 +17,11 @@ module.exports = {
         env: './laradock/.env',
     },
 
+    service: {
+        // relative build-helper's path.
+        build: 'service/build',
+    },
+
     laradock: {
         workspace: 'workspace',
         target: ['nginx', 'mysql', 'redis']

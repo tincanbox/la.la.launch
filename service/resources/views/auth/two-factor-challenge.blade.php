@@ -1,31 +1,31 @@
 <x-guest-layout>
-    <x-jet-authentication-card>
+    <x-authentication-card>
         <x-slot name="logo">
-            <x-jet-authentication-card-logo />
+            <x-logo />
         </x-slot>
 
         <div x-data="{ recovery: false }">
             <div class="mb-4 text-sm text-gray-600" x-show="! recovery">
-                {{ __('Please confirm access to your account by entering the authentication code provided by your authenticator application.') }}
+                {{ __('auth.2fa:confirm:explain') }}
             </div>
 
             <div class="mb-4 text-sm text-gray-600" x-show="recovery">
-                {{ __('Please confirm access to your account by entering one of your emergency recovery codes.') }}
+                {{ __('auth.2fa:recovery:explain') }}
             </div>
 
-            <x-jet-validation-errors class="mb-4" />
+            <x-validation-errors class="mb-4" />
 
             <form method="POST" action="/two-factor-challenge">
                 @csrf
 
                 <div class="mt-4" x-show="! recovery">
-                    <x-jet-label for="code" value="{{ __('Code') }}" />
-                    <x-jet-input id="code" class="block mt-1 w-full" type="text" inputmode="numeric" name="code" autofocus x-ref="code" autocomplete="one-time-code" />
+                    <x-label for="code" :value="__('$.code')" />
+                    <x-input id="code" class="block mt-1 w-full" type="text" inputmode="numeric" name="code" autofocus x-ref="code" autocomplete="one-time-code" />
                 </div>
 
                 <div class="mt-4" x-show="recovery">
-                    <x-jet-label for="recovery_code" value="{{ __('Recovery Code') }}" />
-                    <x-jet-input id="recovery_code" class="block mt-1 w-full" type="text" name="recovery_code" x-ref="recovery_code" autocomplete="one-time-code" />
+                    <x-label for="recovery_code" :value="__('$.recovery_code')" />
+                    <x-input id="recovery_code" class="block mt-1 w-full" type="text" name="recovery_code" x-ref="recovery_code" autocomplete="one-time-code" />
                 </div>
 
                 <div class="flex items-center justify-end mt-4">
@@ -35,7 +35,7 @@
                                         recovery = true;
                                         $nextTick(() => { $refs.recovery_code.focus() })
                                     ">
-                        {{ __('Use a recovery code') }}
+                        {{ __('auth.2fa:Use a recovery code') }}
                     </button>
 
                     <button type="button" class="text-sm text-gray-600 hover:text-gray-900 underline cursor-pointer"
@@ -44,14 +44,14 @@
                                         recovery = false;
                                         $nextTick(() => { $refs.code.focus() })
                                     ">
-                        {{ __('Use an authentication code') }}
+                        {{ __('auth.2fa:Use an authentication code') }}
                     </button>
 
-                    <x-jet-button class="ml-4">
-                        {{ __('Login') }}
-                    </x-jet-button>
+                    <x-button class="ml-4">
+                        {{ __('$.login') }}
+                    </x-button>
                 </div>
             </form>
         </div>
-    </x-jet-authentication-card>
+    </x-authentication-card>
 </x-guest-layout>

@@ -123,10 +123,10 @@ async function copy(src, dest){
 /**
  * docker(
  *   type:string = Type name.
- *     - 'run'     = Equiv: docker-compose your argsss
- *     - 'command' = Equiv: docker-compose exec -T --user=you your_workspace /your/shell -c your command
- *     - 'shell'   = Equiv: docker-compose exec -T --user=you your_workspace /your/shell some thing
- *     - 'exec'    = Equiv: docker-compose exec -T --user=you your_workspace your argsss
+ *     - 'run'     = Equiv: docker-compose [defaults] your argsss
+ *     - 'command' = Equiv: docker-compose [defaults] exec -T --user=you your_workspace /your/shell -c your command
+ *     - 'shell'   = Equiv: docker-compose [defaults] exec -T --user=you your_workspace /your/shell some thing
+ *     - 'exec'    = Equiv: docker-compose [defaults] exec -T --user=you your_workspace your argsss
  *   ...args:mixed = Arguments for command its self.
  * )
  */

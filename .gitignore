@@ -5,8 +5,8 @@
 
 # Structure 
 node_modules
-laradock
-volume/
+/laradock
+/volume/
 
 /service/storage/app/*
 /service/storage/framework/*

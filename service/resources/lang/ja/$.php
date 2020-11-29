@@ -6,6 +6,7 @@ return [
     // B
     // C
     'confirm' => '確定',
+    'code' => 'コード',
     // D
     'delete' => '削除',
     'disable' => '無効化',
@@ -34,6 +35,7 @@ return [
     // R
     'register' => '新規登録',
     'role' => '役割',
+    'recovery_code' => 'リカバリーコード',
     // S
     'save' => '保存',
     'saved' => '保存されました。',
