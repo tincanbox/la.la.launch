@@ -4,7 +4,7 @@
             <x-logo />
         </x-slot>
 
-        <div x-data="{ recovery: false }">
+        <div class="p-4" x-data="{ recovery: false }">
             <div class="mb-4 text-sm text-gray-600" x-show="! recovery">
                 {{ __('auth.2fa:confirm:explain') }}
             </div>

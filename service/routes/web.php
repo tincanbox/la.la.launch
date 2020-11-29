@@ -19,21 +19,28 @@ Inertia::share('app', [
     ]
 ]);
 
-Route::group(['middleware' => 'auth'], function () {
+/**
+ * Authenticated
+ */
+Route::group([
+    'middleware' => ['auth:sanctum', 'verified']
+], function () {
     Route::get('/', function () {
-        exit(2);
         return inertia('Dashboard', []);
-   });
-});
-
-
-Route::middleware(['auth:sanctum', 'verified'])
-    ->get('/dashboard', function () {
+    });
+    Route::get('/dashboard', function () {
         return inertia('Dashboard', []);
     })->name('dashboard');
+});
 
-
-// FALLBACK
-Route::get('/', function () {
-    return view('auth.login');
+/**
+ * Guest
+ */
+Route::group([
+    'middleware' => ['guest']
+], function(){
+    Route::get('/', function () {
+        return view('auth.login');
+    });
+    Route::get('/register', 'AuthController::register');
 });
