@@ -40,6 +40,7 @@ function do_launch() {
 function do_fix_permission() {
   return async (C, done) => {
     await docker('command', 'chown', '-R', CONFIG.docker.user + ':' + CONFIG.docker.group, './' + CONFIG.service.build);
+    await docker('command', 'chown', '-R', CONFIG.docker.user + ':' + CONFIG.docker.group, './service/storage');
     await docker('command', 'chmod', '-R', 'ug+x', './' + CONFIG.service.build);
     done();
   }
@@ -48,7 +49,7 @@ function do_fix_permission() {
 function do_copy() {
   return async (C, done) => {
     await W.copy(__dirname + '/build/laradock', __dirname + '/laradock');
-    await W.copy(__dirname + '/build/service', __dirname + '/' + CONFIG.service.build);
+    await W.copy(__dirname + '/build/service', __dirname + '/service');
     done();
   }
 }

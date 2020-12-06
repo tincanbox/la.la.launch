@@ -8,23 +8,24 @@ set -eu
 #
 # - - - - - - - - - - - - - - - - - -
 
-CMD_COMPOSER=composer --quiet --no-ansi --no-interaction
-CMD_ARTISAN=php artisan --no-ansi
+CMD_COMPOSER="composer --no-ansi --no-interaction --no-cache"
+CMD_ARTISAN="php artisan --no-ansi"
+
+$CMD_COMPOSER global require laravel/installer
 
 # REQ.
-cd /var/www/service
 if [ ! -e /var/www/service ]; then
-    $CMD_COMPOSER global require laravel/installer
     ~/.composer/vendor/bin/laravel new service
+    cd /var/www/service 
+    # Install JETSTREAM
+    $CMD_COMPOSER require laravel/jetstream
+    $CMD_ARTISAN jetstream:install inertia --teams
 fi
+cd /var/www/service 
 
 $CMD_ARTISAN config:clear
 $CMD_ARTISAN cache:clear
-
-# Install
-cd /var/www/service 
-$CMD_COMPOSER require laravel/jetstream
-$CMD_ARTISAN jetstream:install inertia --teams
+$CMD_ARTISAN view:clear
 
 # Mig
 $CMD_ARTISAN migrate

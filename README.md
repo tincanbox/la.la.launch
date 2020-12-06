@@ -13,9 +13,16 @@ ou can simply overrides .conf or .env files via `build/laradock/EACH_DIR`.
 ```
 mkdir YOUR_PROJECT
 cd YOUR_PROJECT
-git clone https://github.com/tincanbox/la.ra.launch.git .
 rm -rf .git
 git init
+```
+
+If you submodule is broken,
+
+```
+git clone https://github.com/tincanbox/la.ra.launch.git .
+git submodule add -f https://github.com/Laradock/laradock.git
+git submodule update --init --remote --recursive
 ```
 
 Just pull this repo and call ./bin/install .

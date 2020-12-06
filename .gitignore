@@ -8,6 +8,6 @@ node_modules
 /laradock
 /volume/
 
-/service/storage/app/*
-/service/storage/framework/*
-!/service/storage/**/*/.gitignore
+/service/build/**/*
+/service/storage/app/**/*
+!.gitignore
