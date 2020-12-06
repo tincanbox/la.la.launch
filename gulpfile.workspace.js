@@ -131,10 +131,20 @@ async function copy(src, dest){
  * )
  */
 function docker(type, ...args) {
+  let command_component = generate_docker_command(type, ...args);
+  return cmd(command_component);
+}
+
+/**
+ * generate_docker_command(
+ *   type:string = Type Name
+ *   ...args:mixed = Arguments for command.
+ * ) -> string
+ */
+function generate_docker_command(type, ...args) {
   let DC = CONFIG.docker;
   let compose_file = path.resolve(DC.file);
   let env_file = path.resolve(DC.env);
-
   let BAS_CMD = 'docker-compose';
   let DEF_ARG = ['-f', compose_file, '--env-file=' + env_file, '--no-ansi', '--log-level', 'ERROR'];
   let EXC_ARG = ['exec', '-T', '--user=' + DC.user, CONFIG.laradock.workspace];
@@ -148,7 +158,7 @@ function docker(type, ...args) {
       CMD_ARG = CMD_ARG.concat(EXC_ARG).concat(args);
       break;
     case 'shell':
-      CMD_ARG = CMD_ARG.concat(EXC_ARG);
+      CMD_ARG = CMD_ARG.concat(['exec', '--user=' + DC.user, CONFIG.laradock.workspace]);
       CMD_ARG.push(DC.shell);
       CMD_ARG = CMD_ARG.concat(args);
       break;
@@ -161,13 +171,15 @@ function docker(type, ...args) {
       throw new Error('Invalid Run Configuration');
   }
 
-  return cmd([BAS_CMD].concat(CMD_ARG));
+  return [BAS_CMD].concat(CMD_ARG);
 }
 
 
 export {
   CONFIG,
   argv, 
+  term,
   bind, dir, copy,
-  docker
+  docker,
+  generate_docker_command
 };

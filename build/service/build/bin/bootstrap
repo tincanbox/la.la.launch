@@ -15,10 +15,12 @@ $CMD_COMPOSER global require laravel/installer
 
 # REQ.
 if [ ! -e /var/www/service ]; then
+    echo "There is no service directory. Creating NEW laravel service app with Jetstream."
     ~/.composer/vendor/bin/laravel new service
     cd /var/www/service 
     # Install JETSTREAM
     $CMD_COMPOSER require laravel/jetstream
+    # DONT disable --teams. In 2020/12/02, disabling Teams is not supported.
     $CMD_ARTISAN jetstream:install inertia --teams
 fi
 cd /var/www/service 

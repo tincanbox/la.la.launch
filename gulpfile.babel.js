@@ -71,8 +71,9 @@ function do_destroy() {
 
 function do_login() {
   return (C, done) => {
-    docker('shell')
-      .then(done);
+    W.term('Direct shell login is ') + W.term.red('NOT SUPPORTED') + W.term('. Use command described below.\n');
+    W.term.yellow(W.generate_docker_command('shell').join(' ') + '\n');
+    done();
   }
 }
 
