@@ -1,5 +1,4 @@
 require('./bootstrap');
-
 require('moment');
 
 import Vue from 'vue';
@@ -11,7 +10,7 @@ import {__, trans, setLocale, getLocale, transChoice, MaticeLocalizationConfig, 
 
 Vue.mixin({
     methods: {
-        route,
+        route
     }
 });
 

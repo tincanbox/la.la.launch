@@ -2929,6 +2929,9 @@ __webpack_require__.r(__webpack_exports__);
     NavLink: _Component_NavLink__WEBPACK_IMPORTED_MODULE_0__["default"],
     NavProfile: _Component_NavProfile__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
+  mounted: function mounted() {
+    console.log(this.$page);
+  },
   methods: {}
 });
 
@@ -46874,10 +46877,34 @@ var render = function() {
                 staticStyle: { "margin-right": "auto" },
                 attrs: { href: _vm.route("dashboard") }
               },
-              [_vm._v("\n                WEBAPP")]
+              [
+                _vm._v(
+                  "\n                " + _vm._s(_vm.$page.app.env.app_name)
+                )
+              ]
             ),
             _vm._v(" "),
-            _vm._m(1),
+            _c(
+              "div",
+              {
+                staticClass: "navbar-nav collapse navbar-collapse",
+                attrs: { id: "navbarCollapse" }
+              },
+              [
+                _c("ul", { staticClass: "navbar-nav mr-auto" }, [
+                  _c("li", { staticClass: "nav-item" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "nav-link",
+                        attrs: { href: _vm.route("dashboard") }
+                      },
+                      [_vm._v("Home")]
+                    )
+                  ])
+                ])
+              ]
+            ),
             _vm._v(" "),
             _c(
               "div",
@@ -46937,28 +46964,6 @@ var staticRenderFns = [
         _c("span", { staticClass: "icon-bar middle-bar" }),
         _vm._v(" "),
         _c("span", { staticClass: "icon-bar bottom-bar" })
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "navbar-nav collapse navbar-collapse",
-        attrs: { id: "navbarCollapse" }
-      },
-      [
-        _c("ul", { staticClass: "navbar-nav mr-auto" }, [
-          _c("li", { staticClass: "nav-item active" }, [
-            _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-              _vm._v("Home"),
-              _c("span", { staticClass: "sr-only" }, [_vm._v("(current)")])
-            ])
-          ])
-        ])
       ]
     )
   }

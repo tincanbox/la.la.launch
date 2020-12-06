@@ -22,15 +22,15 @@
                     :href="route('dashboard')"
                     style="margin-right: auto;"
                     >
-                    WEBAPP</a>
+                    {{ $page.app.env.app_name }}</a>
 
                 <div
                     id="navbarCollapse"
                     class="navbar-nav collapse navbar-collapse"
                     >
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+                        <li class="nav-item">
+                            <a class="nav-link" :href="route('dashboard')">Home</a>
                         </li>
                     </ul>
 
@@ -73,6 +73,10 @@ export default {
     components: {
         NavLink,
         NavProfile
+    },
+
+    mounted: function () {
+        console.log(this.$page);
     },
 
     methods: {

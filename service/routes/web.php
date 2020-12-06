@@ -25,12 +25,15 @@ Inertia::share('app', [
 Route::group([
     'middleware' => ['auth:sanctum', 'verified']
 ], function () {
+
     Route::get('/', function () {
-        return inertia('Dashboard', []);
+        return redirect('dashboard');
     });
+
     Route::get('/dashboard', function () {
         return inertia('Dashboard', []);
     })->name('dashboard');
+
 });
 
 /**
@@ -42,5 +45,4 @@ Route::group([
     Route::get('/', function () {
         return view('auth.login');
     });
-    Route::get('/register', 'AuthController::register');
 });
