@@ -8,6 +8,9 @@ import { InertiaForm } from 'laravel-jetstream';
 import PortalVue from 'portal-vue';
 import {__, trans, setLocale, getLocale, transChoice, MaticeLocalizationConfig, locales} from "matice";
 
+import Element from 'element-ui'
+Vue.use(Element);
+
 Vue.mixin({
     methods: {
         route
@@ -21,7 +24,7 @@ Vue.mixin({
             try {
                 return trans(msg, {args: args, pluralize: pru});
             } catch(e) {
-                return '?? ' + msg
+                return msg
             }
         },
         $transChoice: transChoice,
