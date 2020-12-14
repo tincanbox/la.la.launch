@@ -8,15 +8,22 @@ import { InertiaForm } from 'laravel-jetstream';
 import PortalVue from 'portal-vue';
 import {__, trans, setLocale, getLocale, transChoice, MaticeLocalizationConfig, locales} from "matice";
 
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-Vue.use(BootstrapVue);
-Vue.use(IconsPlugin);
-
 Vue.mixin({
     methods: {
         route
     }
 });
+
+// FontAwesome
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+Vue.component('fa-icon', FontAwesomeIcon);
+
+// Bootstrap-Vue
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+Vue.use(BootstrapVue);
+Vue.use(IconsPlugin);
 
 // matice
 Vue.mixin({
@@ -43,6 +50,7 @@ Vue.mixin({
         }
     }
 });
+
 Vue.use(InertiaApp);
 Vue.use(InertiaForm);
 Vue.use(PortalVue);
