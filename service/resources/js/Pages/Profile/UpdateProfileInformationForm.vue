@@ -90,6 +90,14 @@
                     <gui-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" />
                     <gui-input-error :message="form.error('email')" class="mt-2" />
                 </div>
+
+                <!-- Phone -->
+                <div class="col-12 col-md-10 mb-3">
+                    <gui-label for="phone" :value="__('$.phone')" />
+                    <gui-input id="phone" type="phone" class="mt-1 block w-full" v-model="form.phone" />
+                    <gui-input-error :message="form.error('phone')" class="mt-2" />
+                </div>
+
             </div>
         </template>
 
@@ -133,6 +141,7 @@
                     '_method': 'PUT',
                     name: this.user.name,
                     email: this.user.email,
+                    phone: this.user.phone,
                     photo: null,
                 }, {
                     bag: 'updateProfileInformation',

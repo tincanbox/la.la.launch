@@ -19,6 +19,7 @@
 
 
         <!-- Styles -->
+        <link rel="stylesheet" href="{{ mix('css/tailwind.css') }}">
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
         <!-- Scripts -->

@@ -31,6 +31,7 @@ $CMD_ARTISAN view:clear
 
 # Mig
 $CMD_ARTISAN migrate
+$CMD_ARTISAN passport:install
 
 # Init
 npm install && npm run dev

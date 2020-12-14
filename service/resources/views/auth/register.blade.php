@@ -23,6 +23,11 @@
                 </div>
 
                 <div class="mt-4">
+                    <x-label for="phone" value="{{ __('$.phone') }}" />
+                    <x-input id="phone" class="block mt-1 w-full" type="phone" name="phone" :value="old('phone')" required />
+                </div>
+
+                <div class="mt-4">
                     <x-label for="password" value="{{ __('$.password') }}" />
                     <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
                 </div>

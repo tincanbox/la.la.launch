@@ -30,6 +30,7 @@ return [
     // P
     'password' => 'パスワード',
     'password_confirm' => 'パスワード（確認用）',
+    'phone' => '電話番号',
     'process_done' => '完了しました',
     // Q
     // R

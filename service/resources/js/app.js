@@ -8,8 +8,9 @@ import { InertiaForm } from 'laravel-jetstream';
 import PortalVue from 'portal-vue';
 import {__, trans, setLocale, getLocale, transChoice, MaticeLocalizationConfig, locales} from "matice";
 
-import Element from 'element-ui'
-Vue.use(Element);
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+Vue.use(BootstrapVue);
+Vue.use(IconsPlugin);
 
 Vue.mixin({
     methods: {
