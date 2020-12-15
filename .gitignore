@@ -5,7 +5,6 @@
 
 # Structure 
 node_modules
-/laradock
 /volume/
 
 /service/build/**/*

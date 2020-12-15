@@ -39,9 +39,16 @@ function do_launch() {
 
 function do_fix_permission() {
   return async (C, done) => {
-    await docker('command', 'chown', '-R', CONFIG.docker.user + ':' + CONFIG.docker.group, './' + CONFIG.service.build);
-    await docker('command', 'chown', '-R', CONFIG.docker.user + ':' + CONFIG.docker.group, './service/storage');
-    await docker('command', 'chmod', '-R', 'ug+x', './' + CONFIG.service.build);
+    let rootRun = ['run', 'exec', '-T', '--user', 'root', CONFIG.docker.workspace, '/bin/sh'];
+    await docker.call(
+      rootRun.concat(['chown', '-R', CONFIG.docker.user + ':' + CONFIG.docker.group, './' + CONFIG.service.build].join(' '))
+    );
+    await docker.call(
+      rootRun.concat(['chown', '-R', CONFIG.docker.user + ':' + CONFIG.docker.group, './service/storage'].join(' '))
+    );
+    await docker.call(
+      rootRun.concat(['command', 'chmod', '-R', 'ug+x', './' + CONFIG.service.build].join(' '))
+    );
     done();
   }
 }
@@ -79,7 +86,7 @@ function do_login() {
 
 task('default', bind('series', do_help()));
 task('install', bind('series', do_copy(), do_launch(), do_fix_permission(), do_install()));
-task('launch',  bind('series', do_copy(), do_launch(), do_fix_permission()));
+task('launch',  bind('series', do_launch(), do_fix_permission()));
 task('login',   bind('series', do_login()));
 task('halt',    bind('series', do_stop()));
 task('copy',    bind('series', do_copy()));
