@@ -14,16 +14,24 @@ Vue.mixin({
     }
 });
 
+import moment from 'moment';
+Vue.prototype.$moment = moment;
+
 // FontAwesome
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-Vue.component('fa-icon', FontAwesomeIcon);
+// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+// Vue.component('fa-icon', FontAwesomeIcon);
 
 // Bootstrap-Vue
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-Vue.use(BootstrapVue);
-Vue.use(IconsPlugin);
+// import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+// import 'bootstrap/dist/css/bootstrap.css'
+// import 'bootstrap-vue/dist/bootstrap-vue.css'
+// Vue.use(BootstrapVue);
+// Vue.use(IconsPlugin);
+
+// Swal
+import Swal from 'sweetalert2'
+import 'sweetalert2/src/sweetalert2.scss';
+Vue.prototype.$swal = Swal;
 
 // matice
 Vue.mixin({
@@ -48,6 +56,31 @@ Vue.mixin({
         $locales() {
             return locales()
         }
+    }
+});
+
+// helper
+Vue.mixin({
+    methods: {
+        notify(message){
+            let swal = this.$swal;
+            let toast = swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', swal.stopTimer)
+                    toast.addEventListener('mouseleave', swal.resumeTimer)
+                }
+            });
+            toast.fire({
+                icon: '',
+                title: message
+            });
+        }
+
     }
 });
 
