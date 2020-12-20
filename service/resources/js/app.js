@@ -14,8 +14,14 @@ Vue.mixin({
     }
 });
 
+// moment
 import moment from 'moment';
 Vue.prototype.$moment = moment;
+
+// Swal
+import Swal from 'sweetalert2'
+import 'sweetalert2/src/sweetalert2.scss';
+Vue.prototype.$swal = Swal;
 
 // FontAwesome
 // import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -27,11 +33,6 @@ Vue.prototype.$moment = moment;
 // import 'bootstrap-vue/dist/bootstrap-vue.css'
 // Vue.use(BootstrapVue);
 // Vue.use(IconsPlugin);
-
-// Swal
-import Swal from 'sweetalert2'
-import 'sweetalert2/src/sweetalert2.scss';
-Vue.prototype.$swal = Swal;
 
 // matice
 Vue.mixin({
