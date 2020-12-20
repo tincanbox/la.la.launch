@@ -37,18 +37,22 @@ function do_launch() {
   }
 }
 
-function do_fix_permission() {
+function do_root_job() {
   return async (C, done) => {
-    let rootRun = ['run', 'exec', '-T', '--user', 'root', CONFIG.docker.workspace, '/bin/sh'];
-    await docker.call(
-      rootRun.concat(['chown', '-R', CONFIG.docker.user + ':' + CONFIG.docker.group, './' + CONFIG.service.build].join(' '))
-    );
-    await docker.call(
-      rootRun.concat(['chown', '-R', CONFIG.docker.user + ':' + CONFIG.docker.group, './service/storage'].join(' '))
-    );
-    await docker.call(
-      rootRun.concat(['command', 'chmod', '-R', 'ug+x', './' + CONFIG.service.build].join(' '))
-    );
+    let rootRun = ['run', 'exec', '-T', '--user', 'root', CONFIG.laradock.workspace, '/bin/sh', '-c'];
+    let workspaceUserGroup = CONFIG.docker.user + ':' + CONFIG.docker.group;
+    let cmds = [
+      ['chown', '-R', workspaceUserGroup, './' + CONFIG.service.build],
+      ['chown', '-R', workspaceUserGroup, './service/storage'],
+      ['chmod', '-R', 'ug+x', './' + CONFIG.service.build],
+      ['mkdir -p', './service/vendor'],
+      ['chown', workspaceUserGroup, './service/vendor']
+    ];
+    for (let cmd of cmds) {
+      await docker.apply(this,
+        rootRun.concat(cmd.join(' '))
+      );
+    }
     done();
   }
 }
@@ -85,8 +89,8 @@ function do_login() {
 }
 
 task('default', bind('series', do_help()));
-task('install', bind('series', do_copy(), do_launch(), do_fix_permission(), do_install()));
-task('launch',  bind('series', do_launch(), do_fix_permission()));
+task('install', bind('series', do_copy(), do_launch(), do_root_job(), do_install()));
+task('launch',  bind('series', do_launch(), do_root_job()));
 task('login',   bind('series', do_login()));
 task('halt',    bind('series', do_stop()));
 task('copy',    bind('series', do_copy()));

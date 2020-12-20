@@ -8,5 +8,7 @@ node_modules
 /volume/
 
 /service/build/**/*
+/service/public/js
+/service/public/css
 /service/storage/app/**/*
 !.gitignore

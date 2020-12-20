@@ -21,6 +21,8 @@ return [
     'forgot_your_password' => 'パスワードをお忘れですか？',
     'forgot-password-description' => 'パスワードをお忘れですか？でも大丈夫。ご登録いただいているメールアドレス宛てにパスワードリセット用のリンクをお送りしますので、新たなパスワードを再設定してください。',
     'Email Password Reset Link' => 'パスワードリセットリンクを送信する',
+    'Resend Verification Email' => '認証メールを再送する',
+    'reset_password' => 'パスワードをリセットする',
     // register
     'already_registered' => 'アカウントをお持ちの場合',
     'do-register' => '新規登録',

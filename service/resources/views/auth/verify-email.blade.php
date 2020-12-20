@@ -23,7 +23,7 @@
 
                     <div>
                         <x-button type="submit">
-                            {{ __('Resend Verification Email') }}
+                            {{ __('auth.Resend Verification Email') }}
                         </x-button>
                     </div>
                 </form>

@@ -25,6 +25,8 @@ if [ ! -e /var/www/service ]; then
 fi
 cd /var/www/service 
 
+$CMD_COMPOSER install
+$CMD_COMPOSER dump-autoload
 $CMD_ARTISAN config:clear
 $CMD_ARTISAN cache:clear
 $CMD_ARTISAN view:clear
@@ -32,6 +34,8 @@ $CMD_ARTISAN view:clear
 # Mig
 $CMD_ARTISAN migrate
 $CMD_ARTISAN passport:install
+$CMD_ARTISAN storage:link
+
 
 # Init
 npm install && npm run dev

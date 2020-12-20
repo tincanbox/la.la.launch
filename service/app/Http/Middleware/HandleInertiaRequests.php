@@ -27,6 +27,10 @@ class HandleInertiaRequests extends Middleware
                 'name' => config('app.name')
             ],
 
+            'flash' => [
+                'message' => function($request){ return $request->session()->get('message'); }
+            ],
+
             // Lazily
             'user' => (function($request){
                 return $request->user() ? $request->user()->only('id', 'name', 'email') : null;
