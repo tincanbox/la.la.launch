@@ -14,6 +14,10 @@ Vue.mixin({
     }
 });
 
+// axios
+import axios from 'axios';
+Vue.prototype.$axios = axios;
+
 // moment
 import moment from 'moment';
 Vue.prototype.$moment = moment;

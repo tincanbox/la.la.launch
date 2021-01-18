@@ -19,10 +19,9 @@ class UserAction
      */
     public function handle(Request $request, Closure $next)
     {
-        //Auth::guard('web')->logout();
         $prev = session('previousUrl');
 
-        if ($prev !== url()->previous()) {
+        if ($request->method() == 'GET' && $prev !== url()->previous()) {
             session(['previousUrl' => url()->previous()]);
         }
 

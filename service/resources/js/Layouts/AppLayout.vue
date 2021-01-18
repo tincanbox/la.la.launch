@@ -1,61 +1,24 @@
 <template>
-    <div class="container-flued">
+    <div class="layout-container theme-container container-flued">
 
-        <header>
-            <!-- Fixed navbar -->
-            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-
-                <button
-                    class="navbar-nav navbar-toggler collapsed"
-                    type="button"
-                    data-toggle="collapse" data-target="#navbarCollapse"
-                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"
-                    style="padding-left:0;"
-                    >
-                    <span class="icon-bar top-bar"></span>
-                    <span class="icon-bar middle-bar"></span>
-                    <span class="icon-bar bottom-bar"></span>	
-                </button>
-
-                <a
-                    class="navbar-brand navbar-nav"
-                    :href="route('dashboard')"
-                    style="margin-right: auto;"
-                    >
-                    {{ $page.app.env.app_name }}</a>
-
-                <div
-                    id="navbarCollapse"
-                    class="navbar-nav collapse navbar-collapse"
-                    >
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" :href="route('dashboard')">Home</a>
-                        </li>
-                    </ul>
-
-                </div>
-
-                <div
-                    class=""
-                    style="position: fixed; right: 1em; top: 10px;"
-                    >
-                    <!-- Settings Dropdown -->
-                    <nav-profile />
-                </div>
-
-           </nav>
-        </header>
+        <navigation></navigation>
 
         <!-- Page Heading -->
-        <div class="bg-white shadow" style="margin-top:56px;">
-            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                <slot name="header"></slot>
+        <div class="layout-page-header bg-white shadow">
+            <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+                <div class="row">
+                    <h2 class="layout-page-title col-6 py-3 font-semibold text-gray-800 leading-tight">
+                        <slot name="header-title"></slot>
+                    </h2>
+                    <div class="col-6 text-right">
+                        <slot name="header-action"></slot>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Page Content -->
-        <main>
+        <main class="layout-yield">
             <slot></slot>
         </main>
 
@@ -66,17 +29,24 @@
 </template>
 
 <script>
-import NavLink from '@/Component/NavLink'
-import NavProfile from '@/Component/NavProfile'
+import Logo from '@/SVG/Logo'
+import Navigation from '@/Layouts/Navigation'
 
 export default {
     components: {
-        NavLink,
-        NavProfile
+        Logo,
+        Navigation,
     },
 
     mounted: function () {
-        console.log(this.$page);
+        const self = this;
+        setInterval(function(){
+            if (self.$page.flash.notification) {
+                let message = self.$page.flash.notification;
+                self.notify(message);
+                self.$page.flash.notification = null;
+            }
+        }, 800)
     },
 
     methods: {

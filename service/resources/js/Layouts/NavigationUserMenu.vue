@@ -83,15 +83,11 @@
 </template>
 
 <script>
-
-    import ApplicationMark from '@/SVG/ApplicationMark'
-    import NavLink from './NavLink'
     import Dropdown from './Dropdown'
     import DropdownLink from './DropdownLink'
 
     export default {
         components: {
-            ApplicationMark,
             Dropdown,
             DropdownLink,
         },
@@ -111,11 +107,14 @@
                 })
             },
 
-            logout() {
-                axios.post(route('logout').url()).then(response => {
+            async logout() {
+                try {
+                    await axios.post(route('logout').url());
+                } catch (e) {
+                } finally {
                     window.location = '/';
-                })
-            },
+                }
+            }
         }
     }
 </script>

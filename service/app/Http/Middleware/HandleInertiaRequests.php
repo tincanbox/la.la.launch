@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Inertia\Inertia;
@@ -28,7 +29,7 @@ class HandleInertiaRequests extends Middleware
             ],
 
             'flash' => [
-                'message' => function($request){ return $request->session()->get('message'); }
+                'notification' => function() use($request) { return $request->session()->get('notification'); }
             ],
 
             // Lazily

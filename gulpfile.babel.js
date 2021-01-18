@@ -88,10 +88,21 @@ function do_login() {
   }
 }
 
+function do_recreate() {
+  return async (C, done) => {
+    await docker('run', 'stop');
+    await docker('run', 'down');
+    await W.copy(__dirname + '/build/laradock', __dirname + '/laradock');
+    await docker('run', 'build', CONFIG.laradock.workspace, ...CONFIG.laradock.target);
+    await docker('run', 'up', '-d', CONFIG.laradock.workspace, ...CONFIG.laradock.target)
+    done();
+  }
+}
+
 task('default', bind('series', do_help()));
 task('install', bind('series', do_copy(), do_launch(), do_root_job(), do_install()));
 task('launch',  bind('series', do_launch(), do_root_job()));
 task('login',   bind('series', do_login()));
 task('halt',    bind('series', do_stop()));
-task('copy',    bind('series', do_copy()));
 task('destroy', bind('series', do_destroy()));
+task('recreate',bind('series', do_recreate(), do_root_job()));

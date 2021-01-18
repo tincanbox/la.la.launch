@@ -3,6 +3,9 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
+use Illuminate\Auth\AuthenticationException;
+use Symfony\Component\HttpFoundation\Response;
 
 class Handler extends ExceptionHandler
 {
@@ -34,4 +37,19 @@ class Handler extends ExceptionHandler
     {
         //
     }
+
+    /**
+     * As of ver 1.x, Inertia has redirect bug when authentication failed.
+     * @link https://github.com/laravel/jetstream/issues/128
+     * {@inheritDoc}
+     */
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        if ($request->inertia()) {
+            return response('', 409)->header('X-Inertia-Location', $exception->redirectTo() ?? route('login'));
+        }
+
+        return parent::unauthenticated($request, $exception);
+    }
+
 }

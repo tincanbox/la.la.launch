@@ -168,7 +168,7 @@ function generate_docker_command(type, ...args) {
       CMD_ARG = CMD_ARG.concat(args.join(' '));
       break;
     default:
-      throw new Error('Invalid Run Configuration');
+      throw new Error('Invalid Run Configuration ' + type);
   }
 
   return [BAS_CMD].concat(CMD_ARG);
