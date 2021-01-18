@@ -25,6 +25,17 @@ rm -rf .git
 git init
 ```
 
+Check `./laradock` is there.  
+If not, just clone from Laradock repo.
+(If you need fixed verson of Laradock, use submodule.)
+
+```
+git submodule add https://github.com/laradock/laradock.git
+or
+git submodule init
+git submodule update
+```
+
 Then install node packages and Docker containers.
 
 ```
@@ -32,7 +43,9 @@ npm install
 npx gulp install
 ```
 
-If you are lucky, any problems wont bother you.
+If you are lucky enough, any problems wont bother you.  
+Sometimes docker-compose's destructive changes and libraries funny updates piss you horribly,  
+but... just don't rage-quit this.
 
 ## Develop
 
@@ -50,6 +63,7 @@ If you are lucky, any problems wont bother you.
 ### Webpack
 
 Just run npm command.
+(Basically available both Host & Guest.)
 
 ```
 # Develop
