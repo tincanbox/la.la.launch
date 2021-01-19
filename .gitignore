@@ -4,7 +4,6 @@
 .DS_Store
 
 # Structure 
-/laradock
 /node_modules
 /volume/
 
