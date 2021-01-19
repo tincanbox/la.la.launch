@@ -4,8 +4,9 @@
 .DS_Store
 
 # Structure 
-/node_modules
-/volume/
+laradock
+node_modules
+volume
 
 /service/build/**/*
 /service/public/js
