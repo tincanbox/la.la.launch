@@ -3,16 +3,12 @@ require('moment');
 
 import Vue from 'vue';
 
-import { InertiaApp } from '@inertiajs/inertia-vue';
-import { InertiaForm } from 'laravel-jetstream';
-import PortalVue from 'portal-vue';
-import {__, trans, setLocale, getLocale, transChoice, MaticeLocalizationConfig, locales} from "matice";
+/*----------------------------------------
+ * ThirdParty
+ *----------------------------------------
+ * Import ThirdParty modules which you want to use Vue-globally.
+ */
 
-Vue.mixin({
-    methods: {
-        route
-    }
-});
 
 // axios
 import axios from 'axios';
@@ -22,23 +18,74 @@ Vue.prototype.$axios = axios;
 import moment from 'moment';
 Vue.prototype.$moment = moment;
 
+// ThirdParty END
+
+
+/*----------------------------------------
+ * UI-Component
+ *----------------------------------------
+ * These are just easy examples.
+ * Choose Vuetify or Quaser or some other libraries,
+ * if you need more `larger` component collection.
+ * 
+ * Also, tailwind and bootstrap will conflict with some entities like `.border`.
+ * 
+ */
+
 // Swal
 import Swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss';
 Vue.prototype.$swal = Swal;
+Vue.mixin({
+    methods: {
+        notify(message){
+            let swal = this.$swal;
+            let toast = swal.mixin({
+                toast: true, position: 'top-end', showConfirmButton: false,
+                timer: 3000, timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', swal.stopTimer)
+                    toast.addEventListener('mouseleave', swal.resumeTimer)
+                }
+            });
+            toast.fire({ icon: '', title: message });
+        }
+    }
+});
+
 
 // FontAwesome
-// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-// Vue.component('fa-icon', FontAwesomeIcon);
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+Vue.component('fa-icon', FontAwesomeIcon);
 
 // Bootstrap-Vue
-// import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-// import 'bootstrap/dist/css/bootstrap.css'
-// import 'bootstrap-vue/dist/bootstrap-vue.css'
-// Vue.use(BootstrapVue);
-// Vue.use(IconsPlugin);
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+Vue.use(BootstrapVue);
+Vue.use(IconsPlugin);
 
-// matice
+// UI-Component END
+
+
+/*----------------------------------------
+ * Laravel Implementations
+ *----------------------------------------
+ * These are required for Laravel.
+ */
+
+import { InertiaApp } from '@inertiajs/inertia-vue';
+import { InertiaForm } from 'laravel-jetstream';
+import PortalVue from 'portal-vue';
+
+Vue.mixin({
+    methods: {
+        route
+    }
+});
+
+// matice - i18n module package
+import {__, trans, setLocale, getLocale, transChoice, MaticeLocalizationConfig, locales} from "matice";
 Vue.mixin({
     methods: {
         __: (msg, args, pru = false) => {
@@ -61,31 +108,6 @@ Vue.mixin({
         $locales() {
             return locales()
         }
-    }
-});
-
-// helper
-Vue.mixin({
-    methods: {
-        notify(message){
-            let swal = this.$swal;
-            let toast = swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', swal.stopTimer)
-                    toast.addEventListener('mouseleave', swal.resumeTimer)
-                }
-            });
-            toast.fire({
-                icon: '',
-                title: message
-            });
-        }
-
     }
 });
 
