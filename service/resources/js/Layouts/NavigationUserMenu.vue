@@ -83,8 +83,8 @@
 </template>
 
 <script>
-    import Dropdown from './Dropdown'
-    import DropdownLink from './DropdownLink'
+    import Dropdown from '@/Component/Dropdown'
+    import DropdownLink from '@/Component/DropdownLink'
 
     export default {
         components: {
