@@ -42,21 +42,21 @@
 </template>
 
 <script>
-    import JetActionMessage from '@/Component/ActionMessage'
-    import JetButton from '@/Component/Button'
-    import JetFormSection from '@/Component/FormSection'
-    import JetInput from '@/Component/Input'
-    import JetInputError from '@/Component/InputError'
-    import JetLabel from '@/Component/Label'
+    import GuiActionMessage from '@/Component/ActionMessage'
+    import GuiButton from '@/Component/Button'
+    import GuiFormSection from '@/Component/FormSection'
+    import GuiInput from '@/Component/Input'
+    import GuiInputError from '@/Component/InputError'
+    import GuiLabel from '@/Component/Label'
 
     export default {
         components: {
-            JetActionMessage,
-            JetButton,
-            JetFormSection,
-            JetInput,
-            JetInputError,
-            JetLabel,
+            GuiActionMessage,
+            GuiButton,
+            GuiFormSection,
+            GuiInput,
+            GuiInputError,
+            GuiLabel,
         },
 
         data() {

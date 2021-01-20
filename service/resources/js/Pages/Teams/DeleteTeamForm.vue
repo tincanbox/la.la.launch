@@ -44,21 +44,21 @@
 </template>
 
 <script>
-    import JetActionSection from '@/Component/ActionSection'
-    import JetButton from '@/Component/Button'
-    import JetConfirmationModal from '@/Component/ConfirmationModal'
-    import JetDangerButton from '@/Component/DangerButton'
-    import JetSecondaryButton from '@/Component/SecondaryButton'
+    import GuiActionSection from '@/Component/ActionSection'
+    import GuiButton from '@/Component/Button'
+    import GuiConfirmationModal from '@/Component/ConfirmationModal'
+    import GuiDangerButton from '@/Component/DangerButton'
+    import GuiSecondaryButton from '@/Component/SecondaryButton'
 
     export default {
         props: ['team'],
 
         components: {
-            JetActionSection,
-            JetButton,
-            JetConfirmationModal,
-            JetDangerButton,
-            JetSecondaryButton,
+            GuiActionSection,
+            GuiButton,
+            GuiConfirmationModal,
+            GuiDangerButton,
+            GuiSecondaryButton,
         },
 
         data() {

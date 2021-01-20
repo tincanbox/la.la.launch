@@ -22,15 +22,15 @@
             </div>
             <!-- Account Management -->
             <div class="block px-4 py-2 text-xs text-gray-400">
-                {{ $__('gui.nav:manage_account') }}
+                {{ __('gui.nav:manage_account') }}
             </div>
 
             <dropdown-link :href="route('profile.show')">
-                {{ $__('page.profile:title') }}
+                {{ __('page.profile:title') }}
             </dropdown-link>
 
             <dropdown-link :href="route('api-tokens.index')" v-if="$page.jetstream.hasApiFeatures">
-                {{ $__('page.apitoken:title') }}
+                {{ __('page.apitoken:title') }}
             </dropdown-link>
 
             <div class="border-t border-gray-100"></div>
@@ -38,23 +38,23 @@
             <!-- Team Management -->
             <template v-if="$page.jetstream.hasTeamFeatures">
                 <div class="block px-4 py-2 text-xs text-gray-400">
-                    {{ $__('gui.nav:manage_team') }}
+                    {{ __('gui.nav:manage_team') }}
                 </div>
 
                 <!-- Team Settings -->
                 <dropdown-link :href="route('teams.show', $page.user.current_team)">
-                    {{ $__('page.team:edit:title') }}
+                    {{ __('page.team:edit:title') }}
                 </dropdown-link>
 
                 <dropdown-link :href="route('teams.create')" v-if="$page.jetstream.canCreateTeams">
-                    {{ $__('page.team:create:title') }}
+                    {{ __('page.team:create:title') }}
                 </dropdown-link>
 
                 <div class="border-t border-gray-100"></div>
 
                 <!-- Team Switcher -->
                 <div class="block px-4 py-2 text-xs text-gray-400">
-                    {{ $__('gui.nav:switch_team') }}
+                    {{ __('gui.nav:switch_team') }}
                 </div>
 
                 <template v-for="team in $page.user.all_teams">
@@ -74,7 +74,7 @@
             <!-- Authentication -->
             <form @submit.prevent="logout">
                 <dropdown-link as="button">
-                    {{ $__('$.logout') }}
+                    {{ __('$.logout') }}
                 </dropdown-link>
             </form>
         </template>

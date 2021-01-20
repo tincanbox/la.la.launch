@@ -29,10 +29,9 @@
                 >
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" :href="route('dashboard')">{{ __('page.dashboard:title') }}</a>
+                        <a class="nav-link" :href="route('dashboard')">Dashboard</a>
                     </li>
                 </ul>
-
             </div>
 
             <div
@@ -55,9 +54,6 @@ export default {
     components: {
         Logo,
         NavigationUserMenu,
-    },
-
-    data() {
     },
 
     methods: {
